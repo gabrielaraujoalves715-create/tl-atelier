@@ -8,8 +8,10 @@ import {
 
 export default function Footer() {
   const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-  const [openSection, setOpenSection] = useState<string | null>(null);
+const [subscribed, setSubscribed] = useState(false);
+const [isSubmitting, setIsSubmitting] = useState(false);
+const [subscribeError, setSubscribeError] = useState('');
+const [openSection, setOpenSection] = useState<string | null>(null);
 
   const toggleSection = (section: string) => {
     if (openSection === section) {
@@ -19,16 +21,51 @@ export default function Footer() {
     }
   };
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      setSubscribed(true);
-      setTimeout(() => {
-        setSubscribed(false);
-        setEmail('');
-      }, 3000);
+  const handleSubscribe = async (
+  event: React.FormEvent<HTMLFormElement>,
+) => {
+  event.preventDefault();
+
+  const normalizedEmail = email.trim().toLowerCase();
+
+  if (!normalizedEmail || isSubmitting) {
+    return;
+  }
+
+  setIsSubmitting(true);
+  setSubscribeError('');
+
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: normalizedEmail,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.message || 'Não foi possível realizar a inscrição.',
+      );
     }
-  };
+
+    setSubscribed(true);
+    setEmail('');
+  } catch (error) {
+    setSubscribeError(
+      error instanceof Error
+        ? error.message
+        : 'Não foi possível realizar a inscrição. Tente novamente.',
+    );
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   // Accordion lists
   const sections = {
@@ -77,37 +114,72 @@ export default function Footer() {
           </div>
 
           {subscribed ? (
-            <div className="mx-auto flex max-w-lg items-center justify-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-600/20 px-4 py-4 text-xs text-emerald-300 sm:px-6">
-              <CheckCircle size={16} className="shrink-0" />
-              <span>
-                Inscrição realizada com sucesso! Aproveite os 10% de desconto.
-              </span>
-            </div>
-          ) : (
-            <form
-              onSubmit={handleSubscribe}
-              className="mx-auto flex w-full max-w-lg flex-col gap-3 sm:flex-row sm:gap-0"
-            >
-              <input
-                type="email"
-                placeholder="Digite seu melhor e-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                aria-label="Digite seu e-mail"
-                className="h-12 w-full rounded-full border border-neutral-200 bg-white px-5 text-center text-sm text-neutral-800 outline-none placeholder:text-center placeholder:text-neutral-400 focus:border-[#F472B6] sm:rounded-r-none"
-              />
+  <div
+    role="status"
+    className="mx-auto flex max-w-lg items-center justify-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-600/20 px-4 py-4 text-xs text-emerald-300 sm:px-6"
+  >
+    <CheckCircle size={16} className="shrink-0" />
 
-              <button
-                type="submit"
-                className="flex h-12 w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#F472B6] px-6 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#EC4899] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F472B6] sm:w-auto sm:min-w-[170px] sm:rounded-l-none"
-              >
-                <span>Quero receber</span>
-                <span aria-hidden="true">💌</span>
-              </button>
-            </form>
-          )}
-        </div>
+    <span>
+      Inscrição realizada com sucesso! Aproveite os 10% de desconto.
+    </span>
+  </div>
+) : (
+  <div className="mx-auto w-full max-w-lg">
+    <form
+      onSubmit={handleSubscribe}
+      className="flex w-full flex-col gap-3 sm:flex-row sm:gap-0"
+    >
+      <input
+        type="email"
+        placeholder="Digite seu melhor e-mail"
+        value={email}
+        onChange={(event) => {
+          setEmail(event.target.value);
+          setSubscribeError('');
+        }}
+        required
+        disabled={isSubmitting}
+        autoComplete="email"
+        aria-label="Digite seu e-mail"
+        aria-describedby={
+          subscribeError ? 'newsletter-error' : undefined
+        }
+        className="h-12 w-full rounded-full border border-neutral-200 bg-white px-5 text-center text-sm text-neutral-800 outline-none placeholder:text-center placeholder:text-neutral-400 focus:border-[#F472B6] disabled:cursor-not-allowed disabled:opacity-70 sm:rounded-r-none"
+      />
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="flex h-12 w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#F472B6] px-6 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#EC4899] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F472B6] disabled:cursor-not-allowed disabled:opacity-65 sm:w-auto sm:min-w-[170px] sm:rounded-l-none"
+      >
+        {isSubmitting ? (
+          <span>Enviando...</span>
+        ) : (
+          <>
+            <span>Quero receber</span>
+            <span aria-hidden="true">💌</span>
+          </>
+        )}
+      </button>
+    </form>
+
+    {subscribeError && (
+      <p
+        id="newsletter-error"
+        role="alert"
+        className="mt-3 text-center text-xs text-red-300"
+      >
+        {subscribeError}
+      </p>
+    )}
+
+    <p className="mt-3 text-center text-[10px] leading-relaxed text-neutral-500">
+      Ao se cadastrar, você concorda em receber novidades e ofertas da
+      TL Atelier. Você poderá cancelar a inscrição quando desejar.
+    </p>
+  </div>
+)}
 
         {/* 2. LOGO BRAND CENTRED (Screenshot 1) */}
         <div className="flex flex-col items-center text-center mt-6 mb-8">
@@ -216,6 +288,7 @@ export default function Footer() {
           <p className="mt-1 lowercase first-letter:uppercase">• Todos os direitos reservados.</p>
         </div>
 
+              </div>
       </div>
     </footer>
   );
