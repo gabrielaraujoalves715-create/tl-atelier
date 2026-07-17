@@ -1,0 +1,6 @@
+{
+  "name": "TL Atelier",
+  "description": "Catálogo digital de joias em prata 925 legítima",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
