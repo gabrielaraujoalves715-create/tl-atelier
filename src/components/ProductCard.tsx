@@ -70,9 +70,6 @@ export default function ProductCard({ product }: ProductCardProps) {
               {product.name}
             </div>
           </Link>
-          <div className="text-[9px] uppercase tracking-wider text-brand-dark-rose/80 font-bold mb-1.5 capitalize">
-            {product.category}
-          </div>
           {product.description && (
             <p className="text-[11px] text-neutral-500 line-clamp-2 leading-relaxed">
               {product.description}

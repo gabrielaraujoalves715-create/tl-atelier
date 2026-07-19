@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { ArrowLeft, ShoppingBag, Check, MessageCircle, Shield, Clock } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Check, Shield, Clock } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CartDrawer from '../components/CartDrawer';
@@ -301,7 +301,13 @@ export default function ProductDetails() {
                   aria-label={`Comprar ${product.name} pelo WhatsApp`}
                   className="flex-1 py-4 text-[10px] uppercase tracking-[0.2em] font-bold border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-neutral-900"
                 >
-                  <MessageCircle size={13} className="stroke-[1.5]" />
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="h-4 w-4 shrink-0 fill-current text-[#25D366]"
+                  >
+                    <path d="M12.04 2a9.84 9.84 0 0 0-8.39 14.98L2 22l5.17-1.61A9.99 9.99 0 1 0 12.04 2Zm0 17.98a8.02 8.02 0 0 1-4.1-1.12l-.29-.17-3.07.96.99-2.99-.19-.31a7.82 7.82 0 0 1-1.2-4.18 7.86 7.86 0 1 1 7.86 7.81Zm4.31-5.89c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.91-1.18-.71-.63-1.18-1.41-1.32-1.65-.14-.24-.01-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.47-.39-.41-.54-.42h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.39 1.37.5.58.18 1.1.16 1.51.1.46-.07 1.4-.57 1.6-1.13.2-.55.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z" />
+                  </svg>
                   Comprar pelo WhatsApp
                 </a>
               </div>

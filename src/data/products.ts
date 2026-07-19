@@ -59,27 +59,41 @@ export const products: Product[] = [
 
   // PULSEIRAS
   {
-    id: '5',
-    slug: 'pulseira-01',
-    name: 'Pulseira 01',
-    price: 0,
-    category: 'pulseiras',
-    isFeatured: true,
-    material: 'Prata 925 legítima',
-    warranty: '2 anos',
-    images: [],
-  },
+  id: '5',
+  slug: 'pulseira-caracol-prata-925',
+  name: 'Pulseira Caracol em Prata 925',
+  price: 58.75,
+   originalPrice:98.93,
+   discountBadge: '41% OFF',
+  category: 'pulseiras',
+  shortDescription:
+    'Pulseira em Prata 925 com corrente torcida no estilo caracol.',
+  description:
+    'A Pulseira Caracol em Prata 925 possui uma corrente delicadamente torcida, que reflete a luz e valoriza o brilho da prata. Um modelo versátil e elegante para usar sozinho ou combinar com outras pulseiras.',
+  isFeatured: true,
+  material: 'Prata 925 legítima',
+  warranty: '2 anos',
+  image: '/pulseira-caracol-prata-925.jpeg',
+  images: ['/pulseira-caracol-prata-925.jpeg'],
+},
   {
-    id: '6',
-    slug: 'pulseira-02',
-    name: 'Pulseira 02',
-    price: 0,
-    category: 'pulseiras',
-    isFeatured: false,
-    material: 'Prata 925 legítima',
-    warranty: '2 anos',
-    images: [],
-  },
+  id: '6',
+  slug: 'pulseira-ponto-de-luz-coracao-prata-925',
+  name: 'Pulseira Ponto de Luz Corações em Prata 925',
+  price: 73.37,
+  originalPrice: 132.49,
+  discountBadge: '45% OFF',
+  category: 'pulseiras',
+  shortDescription:
+    'Pulseira em Prata 925 com pontos de luz em formato de coração.',
+  description:
+    'A Pulseira Ponto de Luz Corações em Prata 925 combina uma corrente delicada com detalhes brilhantes em formato de coração. Uma peça romântica e versátil para usar sozinha ou criar combinações com outras pulseiras.',
+  isFeatured: true,
+  material: 'Prata 925 legítima',
+  warranty: '2 anos',
+  image: '/pulseira-ponto-de-luz-corações-prata-925.jpeg',
+  images: ['/pulseira-ponto-de-luz-corações-prata-925.jpeg'],
+},
 
   // BRINCOS
   {
