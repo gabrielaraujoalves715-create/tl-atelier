@@ -5,7 +5,7 @@ export const products: Product[] = [
     {
   id: '1',
   slug: 'colar-ponto-de-luz-lilas-prata-925',
-  name: 'Colar Ponto de Luz Lilás em Prata 925',
+  name: 'COLAR LAVANDA PRATA 925',
   price: 75.49,
   originalPrice: 143.93,
   discountBadge: '48% OFF',
@@ -24,16 +24,26 @@ export const products: Product[] = [
   ],
 },
   {
-    id: '2',
-    slug: 'colar-02',
-    name: 'Colar 02',
-    price: 0,
-    category: 'colares',
-    isFeatured: true,
-    material: 'Prata 925 legítima',
-    warranty: '2 anos',
-    images: [],
-  },
+  id: '2',
+  slug: 'colar-infinito-prata-925',
+  name: 'COLAR INFINITY PRATA 925',
+  price: 105.99,
+  originalPrice: 204.89,
+  discountBadge: '48% OFF',
+  category: 'colares',
+  shortDescription:
+    'Colar em Prata 925 com delicado pingente no formato infinito.',
+  description:
+    'O Colar Infinito em Prata 925 apresenta um pingente delicado com detalhes brilhantes, simbolizando conexões e sentimentos que permanecem. Uma joia elegante e versátil para usar diariamente ou presentear alguém especial.',
+  isFeatured: true,
+  material: 'Prata 925 legítima',
+  warranty: '2 anos',
+  image: '/colar-infinito-prata-925.png',
+  images: [
+    '/colar-infinito-prata-925.png',
+    '/colar-infinito-prata-925.png',
+  ],
+},
   {
     id: '3',
     slug: 'colar-03',
@@ -61,7 +71,7 @@ export const products: Product[] = [
   {
   id: '5',
   slug: 'pulseira-caracol-prata-925',
-  name: 'Pulseira Caracol em Prata 925',
+  name: 'PULSEIRA CARACOL PRATA 925',
   price: 58.75,
    originalPrice:98.93,
    discountBadge: '41% OFF',
@@ -79,7 +89,7 @@ export const products: Product[] = [
   {
   id: '6',
   slug: 'pulseira-ponto-de-luz-coracao-prata-925',
-  name: 'Pulseira Ponto de Luz Corações em Prata 925',
+  name: 'PULSEIRA PONTO DE LUZ CORAÇÕES PRATA 925',
   price: 73.37,
   originalPrice: 132.49,
   discountBadge: '45% OFF',
@@ -134,7 +144,7 @@ export const products: Product[] = [
     {
   id: '10',
   slug: 'conjunto-bolinhas-prata-925',
-  name: 'Conjunto Bolinhas em Prata 925',
+  name: 'CONJUNTO PEROLA PRATA 925',
   price: 165.87,
   originalPrice: 220.35,
   discountBadge: '25% OFF',
@@ -142,7 +152,7 @@ export const products: Product[] = [
   shortDescription:
     'Design delicado com pequenas bolinhas distribuídas pela corrente, criando pontos de brilho sutis e elegantes.',
   description:
-    'O Conjunto Bolinhas em Prata 925 combina delicadeza e versatilidade em peças que valorizam o visual com brilho discreto. As pequenas bolinhas distribuídas pelas correntes criam um acabamento elegante, ideal para usar no dia a dia ou complementar produções especiais.',
+    'O Conjunto Perola em Prata 925 combina delicadeza e versatilidade em peças que valorizam o visual com brilho discreto. As pequenas bolinhas distribuídas pelas correntes criam um acabamento elegante, ideal para usar no dia a dia ou complementar produções especiais.',
   isFeatured: true,
   material: 'Prata 925 legítima',
   warranty: '2 anos',
