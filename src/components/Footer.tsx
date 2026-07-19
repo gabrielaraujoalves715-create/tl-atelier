@@ -95,7 +95,7 @@ const [openSection, setOpenSection] = useState<string | null>(null);
 
           <div className="mx-auto mb-7 flex w-fit flex-col items-start gap-4 text-sm sm:flex-row sm:items-center sm:gap-8">
             <div className="flex w-full items-center gap-3 sm:w-auto">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F472B6] text-xs font-bold text-white">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-dark-rose text-xs font-bold text-white">
                 ✓
               </span>
               <span className="text-left text-neutral-200">
@@ -104,7 +104,7 @@ const [openSection, setOpenSection] = useState<string | null>(null);
             </div>
 
             <div className="flex w-full items-center gap-3 sm:w-auto">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F472B6] text-xs font-bold text-white">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-dark-rose text-xs font-bold text-white">
                 ✓
               </span>
               <span className="text-left text-neutral-200">
@@ -145,13 +145,13 @@ const [openSection, setOpenSection] = useState<string | null>(null);
         aria-describedby={
           subscribeError ? 'newsletter-error' : undefined
         }
-        className="h-12 w-full rounded-full border border-neutral-200 bg-white px-5 text-center text-sm text-neutral-800 outline-none placeholder:text-center placeholder:text-neutral-400 focus:border-[#F472B6] disabled:cursor-not-allowed disabled:opacity-70 sm:rounded-r-none"
+        className="h-12 w-full rounded-full border border-neutral-200 bg-white px-5 text-center text-sm text-neutral-800 outline-none placeholder:text-center placeholder:text-neutral-400 focus:border-brand-dark-rose disabled:cursor-not-allowed disabled:opacity-70 sm:rounded-r-none"
       />
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex h-12 w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#F472B6] px-6 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#EC4899] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F472B6] disabled:cursor-not-allowed disabled:opacity-65 sm:w-auto sm:min-w-[170px] sm:rounded-l-none"
+        className="flex h-12 w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full bg-brand-dark-rose px-6 text-xs font-bold uppercase tracking-wider text-white transition-all hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-dark-rose disabled:cursor-not-allowed disabled:opacity-65 sm:w-auto sm:min-w-[170px] sm:rounded-l-none"
       >
         {isSubmitting ? (
           <span>Enviando...</span>
@@ -186,7 +186,7 @@ const [openSection, setOpenSection] = useState<string | null>(null);
           <span className="font-serif text-[24px] sm:text-[32px] tracking-[0.25em] text-white uppercase font-light leading-none">
             TL Atelier
           </span>
-          <span className="text-[9px] sm:text-[11px] tracking-[0.55em] text-[#F472B6] uppercase font-sans font-medium mt-1.5">
+          <span className="text-[9px] sm:text-[11px] tracking-[0.55em] text-brand-dark-rose uppercase font-sans font-medium mt-1.5">
             P R A T A S
           </span>
         </div>
