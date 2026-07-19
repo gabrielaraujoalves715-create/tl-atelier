@@ -78,7 +78,7 @@ export default function ProductDetails() {
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
         />
-        <main className="flex-grow flex items-center justify-center mt-[100px] md:mt-[116px]">
+        <main className="flex-grow flex items-center justify-center mt-[120px] md:mt-[208px]">
           <div className="text-center px-6 py-24">
             <h1 className="font-serif text-2xl text-brand-text mb-4 italic">
               Produto não encontrado

@@ -52,16 +52,16 @@ export default function Navbar({
   return (
     <div className="fixed left-0 top-0 z-50 flex w-full flex-col shadow-xs">
       {/* Barra promocional */}
-      <div className="w-full select-none border-b border-brand-dark-rose/25 bg-brand-dark-rose px-4 py-2 text-center text-[10px] font-medium tracking-[0.15em] text-[#FFFDFC] sm:text-xs">
+      <div className="flex h-8 w-full select-none items-center justify-center border-b border-brand-dark-rose/25 bg-brand-dark-rose px-4 text-center text-[10px] font-semibold tracking-[0.18em] text-[#FFFDFC] sm:text-xs">
         Parcele em até 10x
       </div>
 
       <header
         id="navbar"
-        className="w-full border-b border-brand-soft-rose/15 bg-white/95 backdrop-blur-md transition-all duration-300"
+        className="relative w-full border-b border-brand-soft-rose/20 bg-[#FFFDFC]/95 backdrop-blur-md"
       >
         {/* Linha principal */}
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 sm:py-3 md:py-4 lg:px-8">
+        <div className="mx-auto flex h-[88px] w-full max-w-[1920px] items-center justify-between px-4 sm:px-6 md:h-[132px] lg:px-8">
           {/* Menu mobile */}
           <div className="flex w-1/4 md:hidden">
             <button
@@ -74,19 +74,19 @@ export default function Navbar({
               id="mobile-menu-btn"
             >
               {isMobileMenuOpen ? (
-                <X size={22} className="stroke-[1.5]" />
+                <X size={23} className="stroke-[1.4]" />
               ) : (
-                <Menu size={22} className="stroke-[1.5]" />
+                <Menu size={23} className="stroke-[1.4]" />
               )}
             </button>
           </div>
 
           {/* Busca desktop */}
-          <div className="hidden w-1/3 select-none items-center text-brand-text/75 md:flex">
-            <div className="group flex w-full max-w-xs items-center space-x-3 border-b border-transparent pb-1 transition-all duration-300 hover:border-brand-soft-rose/30">
+          <div className="hidden w-1/3 items-center md:flex">
+            <div className="group flex w-full max-w-sm items-center gap-3">
               <Search
-                size={18}
-                className="stroke-[1.5] text-brand-text/60 transition-colors group-hover:text-brand-dark-rose"
+                size={22}
+                className="shrink-0 stroke-[1.3] text-brand-text transition-colors group-focus-within:text-brand-dark-rose"
               />
 
               <input
@@ -97,15 +97,15 @@ export default function Navbar({
                   onSearchChange(event.target.value);
                   scrollToCollection();
                 }}
-                className="w-full border-none bg-transparent text-xs text-brand-text outline-hidden placeholder:text-brand-text/40 focus:outline-hidden focus:ring-0 sm:text-[13px]"
+                className="w-full border-none bg-transparent text-sm text-brand-text outline-hidden placeholder:text-brand-text/55 focus:outline-hidden focus:ring-0 lg:text-base"
               />
             </div>
           </div>
 
-          {/* Logo central */}
+          {/* Logo oficial */}
           <div className="flex w-2/4 items-center justify-center md:w-1/3">
             <a
-              href="#inicio"
+              href="/"
               aria-label="Voltar ao início"
               className="flex items-center justify-center"
             >
@@ -118,35 +118,35 @@ export default function Navbar({
           </div>
 
           {/* Ícones da direita */}
-          <div className="flex w-1/4 items-center justify-end space-x-4 sm:space-x-6 md:w-1/3 md:space-x-7">
+          <div className="flex w-1/4 items-center justify-end gap-5 sm:gap-7 md:w-1/3">
             <a
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden text-brand-text/75 transition-colors duration-200 hover:text-brand-dark-rose lg:inline-block"
+              className="hidden text-brand-text transition-colors duration-200 hover:text-brand-dark-rose md:inline-flex"
               aria-label="Acessar Instagram da TL Atelier"
               id="instagram-link"
             >
-              <Instagram size={18} className="stroke-[1.5]" />
+              <Instagram size={21} className="stroke-[1.3]" />
             </a>
 
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="group relative flex cursor-pointer items-center justify-center focus:outline-hidden"
+              className="group relative flex cursor-pointer items-center justify-center text-brand-text transition-colors hover:text-brand-dark-rose focus:outline-hidden"
               aria-label={`Abrir sacola com ${itemCount} ${
                 itemCount === 1 ? 'item' : 'itens'
               }`}
               id="cart-btn"
             >
-              <CustomCartIcon itemCount={itemCount} size={25} />
+              <CustomCartIcon itemCount={itemCount} size={27} />
             </button>
           </div>
         </div>
 
         {/* Navegação desktop */}
-        <nav className="hidden items-center justify-center border-t border-brand-soft-rose/10 bg-brand-light-pink/5 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-text/75 md:flex sm:text-[11px]">
-          <div className="flex space-x-10">
+       <nav className="hidden h-11 items-center justify-center text-[11px] font-bold uppercase tracking-[0.25em] text-brand-text/75 md:flex">
+          <div className="flex items-center gap-10 lg:gap-12">
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -165,7 +165,7 @@ export default function Navbar({
         {/* Menu mobile */}
         <div
           id="mobile-navigation"
-          className={`absolute left-0 top-full w-full border-b border-brand-soft-rose/25 bg-white/95 backdrop-blur-md transition-all duration-300 ease-in-out md:hidden ${
+          className={`absolute left-0 top-full w-full border-b border-brand-soft-rose/25 bg-[#FFFDFC]/95 backdrop-blur-md transition-all duration-300 ease-in-out md:hidden ${
             isMobileMenuOpen
               ? 'pointer-events-auto translate-y-0 opacity-100 shadow-md'
               : 'pointer-events-none -translate-y-4 opacity-0'
@@ -173,17 +173,20 @@ export default function Navbar({
         >
           <div className="flex flex-col items-center space-y-4 px-5 pb-6 pt-4">
             {/* Busca mobile */}
-            <div className="mb-2 flex w-full items-center space-x-2.5 rounded-xs border border-brand-soft-rose/20 bg-brand-light-pink/20 px-3.5 py-2">
+            <div className="mb-2 flex w-full items-center gap-2.5 rounded-xs border border-brand-soft-rose/25 bg-brand-light-pink/20 px-3.5 py-2.5">
               <Search
-                size={15}
-                className="stroke-[2] text-brand-text/50"
+                size={16}
+                className="stroke-[1.5] text-brand-text/60"
               />
 
               <input
                 type="search"
                 placeholder="Qual joia você procura?"
                 value={searchQuery}
-                onChange={(event) => onSearchChange(event.target.value)}
+                onChange={(event) => {
+                  onSearchChange(event.target.value);
+                  scrollToCollection();
+                }}
                 className="w-full border-none bg-transparent text-[11px] text-brand-text outline-hidden placeholder:text-brand-text/45 focus:outline-hidden focus:ring-0"
               />
 
@@ -213,15 +216,14 @@ export default function Navbar({
               </a>
             ))}
 
-            {/* Instagram mobile */}
             <a
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Acessar Instagram da TL Atelier"
-              className="flex w-full items-center justify-center space-x-2 border-t border-brand-soft-rose/15 pt-3 text-xs font-semibold uppercase tracking-widest text-brand-text transition-colors duration-200 hover:text-brand-dark-rose"
+              className="flex w-full items-center justify-center gap-2 border-t border-brand-soft-rose/20 pt-3 text-xs font-semibold uppercase tracking-widest text-brand-text transition-colors duration-200 hover:text-brand-dark-rose"
             >
-              <Instagram size={14} className="stroke-[1.5]" />
+              <Instagram size={15} className="stroke-[1.5]" />
               <span>Instagram</span>
             </a>
           </div>

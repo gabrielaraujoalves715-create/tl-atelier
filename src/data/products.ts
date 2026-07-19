@@ -89,7 +89,7 @@ export const products: Product[] = [
   {
   id: '6',
   slug: 'pulseira-ponto-de-luz-coracao-prata-925',
-  name: 'PULSEIRA PONTO DE LUZ CORAÇÕES PRATA 925',
+  name: 'PULSEIRA CORAÇÕES PRATA 925',
   price: 73.37,
   originalPrice: 132.49,
   discountBadge: '45% OFF',
