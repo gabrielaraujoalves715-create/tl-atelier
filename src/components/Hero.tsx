@@ -44,31 +44,31 @@ export default function Hero() {
         "
       >
         <button
-          type="button"
-          onClick={handleScrollToCollection}
-          id="hero-view-collection"
-          className="
-            flex h-[38px] w-[175px]
-            cursor-pointer items-center justify-center
-            border border-[#8A625A]
-            bg-transparent px-5
-            text-[13px] font-normal normal-case
-            tracking-normal text-[#8A625A]
-            transition-colors duration-300
-            hover:bg-[#8A625A] hover:text-white
-            focus-visible:outline focus-visible:outline-2
-            focus-visible:outline-offset-2
-            focus-visible:outline-[#8A625A]
-            md:h-12 md:w-auto md:max-w-none
-            md:border-neutral-900 md:px-10
-            md:text-xs md:font-bold md:uppercase
-            md:tracking-[0.25em] md:text-neutral-900
-            md:hover:bg-neutral-900
-          "
-        >
-          Ver coleção
-        </button>
-      </div>
+  type="button"
+  onClick={handleScrollToCollection}
+  id="hero-view-collection"
+  className="
+    flex h-[38px] w-[175px]
+    cursor-pointer items-center justify-center
+    border border-neutral-900
+    bg-transparent px-5
+    text-[13px] font-normal normal-case
+    tracking-normal text-neutral-900
+    transition-colors duration-300
+    hover:bg-neutral-900 hover:text-white
+    focus-visible:outline focus-visible:outline-2
+    focus-visible:outline-offset-2
+    focus-visible:outline-neutral-900
+    md:h-12 md:w-auto md:max-w-none
+    md:px-10
+    md:text-xs md:font-bold md:uppercase
+    md:tracking-[0.25em]
+  "
+>
+  Ver coleção
+</button>
+
+</div>
 
       {/* Identificação lateral no desktop */}
       <div className="absolute bottom-10 right-6 hidden flex-col items-center space-y-4 text-neutral-400 lg:flex">
