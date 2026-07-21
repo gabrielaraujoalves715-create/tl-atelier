@@ -3,6 +3,7 @@ import { Instagram, Menu, Search, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import CustomCartIcon from './CustomCartIcon';
 import type { ProductCategory } from '../types/product';
+import { useNavigate } from 'react-router-dom';
 
 const INSTAGRAM_URL = 'https://www.instagram.com/ateliertl__/';
 
@@ -28,64 +29,81 @@ export default function Navbar({
 }: NavbarProps) {
   const { setIsOpen, itemCount } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
     const navLinks: NavLink[] = [
-    {
-      label: 'Início',
-      href: '#inicio',
-      category: null,
-    },
-    {
-      label: 'Colares',
-      href: '#colecao',
-      category: 'colares',
-    },
-    {
-      label: 'Pulseiras',
-      href: '#colecao',
-      category: 'pulseiras',
-    },
-    {
-      label: 'Brincos',
-      href: '#colecao',
-      category: 'brincos',
-    },
-    {
-      label: 'Conjuntos',
-      href: '#colecao',
-      category: 'conjuntos',
-    },
-    {
-      label: 'Anéis',
-      href: '#colecao',
-      category: 'aneis',
-    },
-    {
-      label: 'Sobre',
-      href: '#prata-925',
-      category: null,
-    },
-  ];
+  {
+    label: 'Início',
+    href: '/',
+    category: null,
+  },
+  {
+    label: 'Colares',
+    href: '/categoria/colares',
+    category: 'colares',
+  },
+  {
+    label: 'Pulseiras',
+    href: '/categoria/pulseiras',
+    category: 'pulseiras',
+  },
+  {
+    label: 'Brincos',
+    href: '/categoria/brincos',
+    category: 'brincos',
+  },
+  {
+    label: 'Conjuntos',
+    href: '/categoria/conjuntos',
+    category: 'conjuntos',
+  },
+  {
+    label: 'Anéis',
+    href: '/categoria/aneis',
+    category: 'aneis',
+  },
+  {
+    label: 'Sobre',
+    href: '/#prata-925',
+    category: null,
+  },
+];
 
   const handleLinkClick = (link: NavLink) => {
-    setIsMobileMenuOpen(false);
-    onSelectCategory?.(link.category);
-  };
+  setIsMobileMenuOpen(false);
 
-  const scrollToCollection = () => {
+  if (link.label === 'Sobre') {
+    navigate('/');
+
+    window.setTimeout(() => {
+      document.getElementById('prata-925')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 100);
+
+    return;
+  }
+
+  navigate(link.href);
+};
+
+const scrollToCollection = () => {
+  window.setTimeout(() => {
     const collection = document.getElementById('colecao');
 
     collection?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
-  };
+  }, 50);
+};
 
   return (
     <div className="fixed left-0 top-0 z-50 flex w-full flex-col shadow-xs">
       {/* Barra promocional */}
       <div className="flex h-8 w-full select-none items-center justify-center border-b border-brand-dark-rose/25 bg-brand-dark-rose px-4 text-center text-[10px] font-semibold tracking-[0.18em] text-[#FFFDFC] sm:text-xs">
-        Parcele em até 10x
+        Em compras acima de R$ 199,90 ganhe um brinde exclusivo da TL Atelier. Aproveite!
       </div>
 
       <header
@@ -183,7 +201,10 @@ export default function Navbar({
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => handleLinkClick(link)}
+                onClick={(event) => {
+  event.preventDefault();
+  handleLinkClick(link);
+}}
                 className="group relative py-1 transition-colors duration-200 hover:text-brand-dark-rose"
               >
                 {link.label}

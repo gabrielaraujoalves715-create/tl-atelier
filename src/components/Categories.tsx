@@ -2,7 +2,9 @@ import type { ProductCategory } from '../types/product';
 
 interface CategoriesProps {
   selectedCategory: ProductCategory | null;
-  onSelectCategory: (category: ProductCategory | null) => void;
+  onSelectCategory: (
+    category: ProductCategory | null,
+  ) => void;
 }
 
 type Category = {
@@ -49,7 +51,9 @@ export default function Categories({
     },
   ];
 
-    const handleSelectCategory = (category: ProductCategory) => {
+  const handleSelectCategory = (
+    category: ProductCategory,
+  ) => {
     onSelectCategory(category);
   };
 
@@ -57,10 +61,13 @@ export default function Categories({
     <section
       id="categorias"
       className="
+        scroll-mt-[120px]
         select-none
         border-b border-brand-soft-rose/10
         bg-[#FFFDFC]
-        py-10 md:py-12
+        py-10
+        md:scroll-mt-[208px]
+        md:py-12
       "
     >
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
@@ -69,14 +76,16 @@ export default function Categories({
             mx-auto
             flex
             w-full
+            snap-x
+            snap-mandatory
             items-start
             justify-start
             gap-5
             overflow-x-auto
             overscroll-x-contain
-            px-1 pb-3
             scroll-smooth
-            snap-x snap-mandatory
+            px-1
+            pb-3
             touch-pan-x
             [-ms-overflow-style:none]
             [scrollbar-width:none]
@@ -89,15 +98,18 @@ export default function Categories({
           "
         >
           {categoriesList.map((category) => {
-            const isSelected = selectedCategory === category.key;
+            const isSelected =
+              selectedCategory === category.key;
 
             return (
               <button
                 key={category.key}
                 type="button"
-                onClick={() => handleSelectCategory(category.key)}
+                onClick={() =>
+                  handleSelectCategory(category.key)
+                }
                 aria-pressed={isSelected}
-                aria-label={`Filtrar produtos por ${category.label}`}
+                aria-label={`Abrir categoria ${category.label}`}
                 className="
                   group
                   flex
@@ -110,24 +122,30 @@ export default function Categories({
                   justify-center
                   gap-3
                   text-center
-                  sm:w-auto
                   focus-visible:outline
                   focus-visible:outline-2
                   focus-visible:outline-offset-4
                   focus-visible:outline-brand-dark-rose
+                  sm:w-auto
                 "
               >
                 <div
                   className={`
                     flex
-                    h-[100px] w-[100px]
-                    items-center justify-center
+                    h-[100px]
+                    w-[100px]
+                    items-center
+                    justify-center
                     rounded-full
                     p-[3px]
-                    transition-all duration-300
-                    sm:h-[110px] sm:w-[110px]
-                    md:h-[140px] md:w-[140px]
-                    lg:h-[160px] lg:w-[160px]
+                    transition-all
+                    duration-300
+                    sm:h-[110px]
+                    sm:w-[110px]
+                    md:h-[140px]
+                    md:w-[140px]
+                    lg:h-[160px]
+                    lg:w-[160px]
                     ${
                       isSelected
                         ? 'scale-105 bg-brand-dark-rose shadow-md'

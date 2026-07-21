@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Categories from '../components/Categories';
@@ -6,6 +7,7 @@ import FeaturedProducts from '../components/FeaturedProducts';
 import ProductGrid from '../components/ProductGrid';
 import EditorialSection from '../components/EditorialSection';
 import Benefits from '../components/Benefits';
+import NewReleases from '../components/NewReleases';
 import Testimonials from '../components/Testimonials';
 import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
@@ -13,41 +15,29 @@ import CartDrawer from '../components/CartDrawer';
 import MobileBottomNav from '../components/MobileBottomNav';
 import type { ProductCategory } from '../types/product';
 
-type CategoryType = ProductCategory | null;
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] =
-    useState<CategoryType>(null);
-
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const scrollToCollection = () => {
-    const gridElement = document.getElementById('colecao');
-
-    gridElement?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  };
-
-       const handleSelectCategory = (category: CategoryType) => {
-    setSelectedCategory(category);
+  const handleSelectCategory = (
+    category: ProductCategory | null,
+  ) => {
     setSearchQuery('');
 
     if (category) {
-      requestAnimationFrame(() => {
-        scrollToCollection();
-      });
+      navigate(`/categoria/${category}`);
+      return;
     }
+
+    navigate('/');
   };
 
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
-
-    if (query.trim()) {
-      setSelectedCategory(null);
-    }
   };
+
+  const isSearching = searchQuery.trim().length > 0;
 
   return (
     <div
@@ -64,21 +54,25 @@ export default function Home() {
         <Hero />
 
         <Categories
-          selectedCategory={selectedCategory}
+          selectedCategory={null}
           onSelectCategory={handleSelectCategory}
         />
 
-        {!selectedCategory && !searchQuery.trim() && (
-  <FeaturedProducts />
-)}
+        {isSearching ? (
+          <ProductGrid
+            selectedCategory={null}
+            searchQuery={searchQuery}
+          />
+        ) : (
+          <>
+            <FeaturedProducts />
+          </>
+        )}
+
         <EditorialSection />
         <Benefits />
-
-        <ProductGrid
-          selectedCategory={selectedCategory}
-          searchQuery={searchQuery}
-        />
-        <Testimonials /> 
+        <NewReleases />
+        <Testimonials />
         <FinalCTA />
       </main>
 

@@ -28,7 +28,7 @@ export default function ProductGrid({
 }: ProductGridProps) {
   const normalizedSearch = normalizeText(searchQuery);
 
-    const filteredProducts = products.filter((product) => {
+  const filteredProducts = products.filter((product) => {
     if (
       selectedCategory &&
       product.category !== selectedCategory
@@ -56,19 +56,23 @@ export default function ProductGrid({
   return (
     <section
       id="colecao"
-      className="border-b border-brand-soft-rose/20 bg-brand-main py-20"
+      className="
+        overflow-x-clip
+        border-b border-brand-soft-rose/20
+        bg-brand-main
+        pb-28 pt-14
+        md:py-20
+      "
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 flex flex-col justify-between gap-4 border-b border-brand-soft-rose/10 pb-6 sm:flex-row sm:items-end">
-          <div>
-            <h2 className="font-serif text-4xl font-medium normal-case leading-none tracking-[-0.02em] text-brand-text sm:text-5xl">
-              {selectedCategory
-                ? `Coleção ${categoryLabels[selectedCategory]}`
-                : 'Nossas Joias'}
-            </h2>
-          </div>
+      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 flex flex-col gap-4 border-b border-brand-soft-rose/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
+          <h2 className="font-serif text-4xl font-medium normal-case leading-none tracking-[-0.02em] text-brand-text sm:text-5xl">
+            {selectedCategory
+              ? `Coleção ${categoryLabels[selectedCategory]}`
+              : 'Nossas Joias'}
+          </h2>
 
-          <span className="rounded-sm border border-brand-soft-rose/20 bg-brand-light-pink/40 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-brand-text/50">
+          <span className="w-fit rounded-sm border border-brand-soft-rose/20 bg-brand-light-pink/40 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-brand-text/50">
             {filteredProducts.length}{' '}
             {filteredProducts.length === 1
               ? 'modelo encontrado'
@@ -77,9 +81,18 @@ export default function ProductGrid({
         </div>
 
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+          <div className="flex w-full flex-wrap justify-center gap-5 sm:gap-6 lg:gap-8">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <div
+                key={product.id}
+                className="
+                  flex w-full
+                  sm:w-[calc(50%-0.75rem)]
+                  lg:w-[calc(33.333333%-1.334rem)]
+                "
+              >
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
         ) : (

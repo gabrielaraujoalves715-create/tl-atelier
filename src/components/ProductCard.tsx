@@ -10,7 +10,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const productUrl = `/produto/${product.slug}`;
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-xs border border-brand-soft-rose/20 bg-white transition-all duration-300 hover:shadow-md">
+    <div className="group flex h-full min-w-0 w-full flex-col overflow-hidden rounded-xs border border-brand-soft-rose/20 bg-white transition-all duration-300 hover:shadow-md">
       {/* Imagem clicável */}
       <Link
         to={productUrl}
@@ -22,7 +22,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <img
               src={product.image}
               alt={product.name}
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="block h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
             <ImagePlaceholder

@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
-import {
-  Instagram,
-  ChevronDown,
-  ChevronUp,
-  CheckCircle,
-} from 'lucide-react';
+import React, { useState } from "react";
+import { Instagram, ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
-const [subscribed, setSubscribed] = useState(false);
-const [isSubmitting, setIsSubmitting] = useState(false);
-const [subscribeError, setSubscribeError] = useState('');
-const [openSection, setOpenSection] = useState<string | null>(null);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [subscribeError, setSubscribeError] = useState("");
+  const [openSection, setOpenSection] = useState<string | null>(null);
+
+  const formatPhone = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 11);
+
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 6) {
+      return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    }
+    if (digits.length <= 10) {
+      return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    }
+
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  };
 
   const toggleSection = (section: string) => {
     if (openSection === section) {
@@ -21,72 +33,93 @@ const [openSection, setOpenSection] = useState<string | null>(null);
     }
   };
 
-  const handleSubscribe = async (
-  event: React.FormEvent<HTMLFormElement>,
-) => {
-  event.preventDefault();
+  const handleSubscribe = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const normalizedEmail = email.trim().toLowerCase();
+    if (isSubmitting) return;
 
-  if (!normalizedEmail || isSubmitting) {
-    return;
-  }
+    const normalizedName = name.replace(/\s+/g, " ").trim();
+    const normalizedEmail = email.trim().toLowerCase();
+    const phoneDigits = phone.replace(/\D/g, "");
 
-  setIsSubmitting(true);
-  setSubscribeError('');
-
-  try {
-    const response = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: normalizedEmail,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        data.message || 'Não foi possível realizar a inscrição.',
-      );
+    if (normalizedName.length < 3 || !normalizedName.includes(" ")) {
+      setSubscribeError("Informe seu nome e sobrenome.");
+      return;
     }
 
-    setSubscribed(true);
-    setEmail('');
-  } catch (error) {
-    setSubscribeError(
-      error instanceof Error
-        ? error.message
-        : 'Não foi possível realizar a inscrição. Tente novamente.',
-    );
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+    if (phoneDigits.length !== 10 && phoneDigits.length !== 11) {
+      setSubscribeError("Informe um telefone ou WhatsApp válido com DDD.");
+      return;
+    }
+
+    if (!consent) {
+      setSubscribeError("Confirme que deseja receber novidades e ofertas.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubscribeError("");
+
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: normalizedName,
+          phone: phoneDigits,
+          email: normalizedEmail,
+          consent,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Não foi possível realizar o cadastro.",
+        );
+      }
+
+      setSubscribed(true);
+      setName("");
+      setPhone("");
+      setEmail("");
+      setConsent(false);
+    } catch (error) {
+      setSubscribeError(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível realizar o cadastro. Tente novamente.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Accordion lists
   const sections = {
     sobre: {
-      title: 'SOBRE A TL ATELIER',
-      content: 'A TL Atelier é uma marca paulistana dedicada à curadoria de joias exclusivas em Prata 925 legítima. Unimos sofisticação, design minimalista e afeto para criar peças que acompanham você em todos os momentos da sua rotina, trazendo brilho e confiança ao seu estilo de vida.'
+      title: "SOBRE A TL ATELIER",
+      content:
+        "A TL Atelier é uma marca paulistana dedicada à curadoria de joias exclusivas em Prata 925 legítima. Unimos sofisticação, design minimalista e afeto para criar peças que acompanham você em todos os momentos da sua rotina, trazendo brilho e confiança ao seu estilo de vida.",
     },
     ajuda: {
-      title: 'AJUDA',
-      content: 'Oferecemos total suporte aos nossos clientes. Garantia legítima de 2 anos contra defeitos de fabricação. Opções flexíveis de entrega rápida via motoboy ou retirada agendada em pontos parceiros na Grande São Paulo.'
+      title: "AJUDA",
+      content:
+        "Oferecemos total suporte aos nossos clientes. Garantia legítima de 2 anos contra defeitos de fabricação. Opções flexíveis de entrega rápida via motoboy ou retirada agendada em pontos parceiros na Grande São Paulo.",
     },
     sac: {
-      title: 'SAC',
-      content: 'Precisa de suporte? Entre em contato pelo WhatsApp (11) 96542-8500 ou pelo e-mail sac@ateliertl.com.br. Nosso horário de atendimento é de segunda a sexta-feira, das 09:00 às 18:00.'
-    }
+      title: "SAC",
+      content:
+        "Precisa de suporte? Entre em contato pelo WhatsApp (11) 96542-8500 ou pelo e-mail sac@ateliertl.com.br. Nosso horário de atendimento é de segunda a sexta-feira, das 09:00 às 18:00.",
+    },
   };
 
   return (
     <footer className="select-none border-t border-neutral-800 bg-black px-4 pb-8 pt-16 text-white">
       <div className="max-w-4xl mx-auto flex flex-col items-center">
-        
         {/* 1. NEWSLETTER */}
         <div className="mb-12 w-full px-2 text-center sm:px-0">
           <h3 className="mb-5 text-2xl font-bold tracking-tight text-white sm:text-3xl">
@@ -114,72 +147,132 @@ const [openSection, setOpenSection] = useState<string | null>(null);
           </div>
 
           {subscribed ? (
-  <div
-    role="status"
-    className="mx-auto flex max-w-lg items-center justify-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-600/20 px-4 py-4 text-xs text-emerald-300 sm:px-6"
-  >
-    <CheckCircle size={16} className="shrink-0" />
+            <div
+              role="status"
+              className="mx-auto flex max-w-lg items-center justify-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-600/20 px-4 py-4 text-xs text-emerald-300 sm:px-6"
+            >
+              <CheckCircle size={16} className="shrink-0" />
+              <span>
+                Cadastro realizado com sucesso! Aproveite os 10% de desconto.
+              </span>
+            </div>
+          ) : (
+            <div className="mx-auto w-full max-w-lg">
+              <form
+                onSubmit={handleSubscribe}
+                className="flex w-full flex-col gap-3"
+              >
+                <label htmlFor="newsletter-name" className="sr-only">
+                  Nome completo
+                </label>
+                <input
+                  id="newsletter-name"
+                  type="text"
+                  name="name"
+                  placeholder="Nome completo"
+                  value={name}
+                  onChange={(event) => {
+                    setName(event.target.value);
+                    setSubscribeError("");
+                  }}
+                  required
+                  minLength={3}
+                  maxLength={120}
+                  disabled={isSubmitting}
+                  autoComplete="name"
+                  className="h-12 w-full rounded-full border border-neutral-200 bg-white px-5 text-center text-sm text-neutral-800 outline-none placeholder:text-neutral-400 focus:border-brand-dark-rose disabled:cursor-not-allowed disabled:opacity-70"
+                />
 
-    <span>
-      Inscrição realizada com sucesso! Aproveite os 10% de desconto.
-    </span>
-  </div>
-) : (
-  <div className="mx-auto w-full max-w-lg">
-    <form
-      onSubmit={handleSubscribe}
-      className="flex w-full flex-col gap-3 sm:flex-row sm:gap-0"
-    >
-      <input
-        type="email"
-        placeholder="Digite seu melhor e-mail"
-        value={email}
-        onChange={(event) => {
-          setEmail(event.target.value);
-          setSubscribeError('');
-        }}
-        required
-        disabled={isSubmitting}
-        autoComplete="email"
-        aria-label="Digite seu e-mail"
-        aria-describedby={
-          subscribeError ? 'newsletter-error' : undefined
-        }
-        className="h-12 w-full rounded-full border border-neutral-200 bg-white px-5 text-center text-sm text-neutral-800 outline-none placeholder:text-center placeholder:text-neutral-400 focus:border-brand-dark-rose disabled:cursor-not-allowed disabled:opacity-70 sm:rounded-r-none"
-      />
+                <label htmlFor="newsletter-phone" className="sr-only">
+                  Telefone ou WhatsApp
+                </label>
+                <input
+                  id="newsletter-phone"
+                  type="tel"
+                  name="phone"
+                  placeholder="Telefone/WhatsApp com DDD"
+                  value={phone}
+                  onChange={(event) => {
+                    setPhone(formatPhone(event.target.value));
+                    setSubscribeError("");
+                  }}
+                  required
+                  maxLength={15}
+                  disabled={isSubmitting}
+                  autoComplete="tel"
+                  inputMode="tel"
+                  className="h-12 w-full rounded-full border border-neutral-200 bg-white px-5 text-center text-sm text-neutral-800 outline-none placeholder:text-neutral-400 focus:border-brand-dark-rose disabled:cursor-not-allowed disabled:opacity-70"
+                />
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="flex h-12 w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full bg-brand-dark-rose px-6 text-xs font-bold uppercase tracking-wider text-white transition-all hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-dark-rose disabled:cursor-not-allowed disabled:opacity-65 sm:w-auto sm:min-w-[170px] sm:rounded-l-none"
-      >
-        {isSubmitting ? (
-          <span>Enviando...</span>
-        ) : (
-          <>
-            <span>Quero receber</span>
-            <span aria-hidden="true">💌</span>
-          </>
-        )}
-      </button>
-    </form>
+                <label htmlFor="newsletter-email" className="sr-only">
+                  E-mail
+                </label>
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  name="email"
+                  placeholder="Digite seu melhor e-mail"
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                    setSubscribeError("");
+                  }}
+                  required
+                  maxLength={160}
+                  disabled={isSubmitting}
+                  autoComplete="email"
+                  aria-describedby={
+                    subscribeError ? "newsletter-error" : undefined
+                  }
+                  className="h-12 w-full rounded-full border border-neutral-200 bg-white px-5 text-center text-sm text-neutral-800 outline-none placeholder:text-neutral-400 focus:border-brand-dark-rose disabled:cursor-not-allowed disabled:opacity-70"
+                />
 
-    {subscribeError && (
-      <p
-        id="newsletter-error"
-        role="alert"
-        className="mt-3 text-center text-xs text-red-300"
-      >
-        {subscribeError}
-      </p>
-    )}
+                <label className="flex cursor-pointer items-start gap-3 px-1 text-left">
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(event) => {
+                      setConsent(event.target.checked);
+                      setSubscribeError("");
+                    }}
+                    required
+                    disabled={isSubmitting}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-brand-dark-rose"
+                  />
+                  <span className="text-[10px] leading-relaxed text-neutral-400 sm:text-[11px]">
+                    Concordo em receber novidades, ofertas e comunicações da TL
+                    Atelier por e-mail e WhatsApp.
+                  </span>
+                </label>
 
-    <p className="mt-3 text-center text-[10px] leading-relaxed text-neutral-500">
-      Ao se cadastrar, você concorda em receber novidades e ofertas da
-      TL Atelier. Você poderá cancelar a inscrição quando desejar.
-    </p>
-  </div>
-)}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-brand-dark-rose px-6 text-xs font-bold uppercase tracking-wider text-white transition-all hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-dark-rose disabled:cursor-not-allowed disabled:opacity-65"
+                >
+                  {isSubmitting ? (
+                    <span>Enviando...</span>
+                  ) : (
+                    <>
+                      <span>Quero receber</span>
+                      <span aria-hidden="true">💌</span>
+                    </>
+                  )}
+                </button>
+              </form>
+
+              {subscribeError && (
+                <p
+                  id="newsletter-error"
+                  role="alert"
+                  className="mt-3 text-center text-xs text-red-300"
+                >
+                  {subscribeError}
+                </p>
+              )}
+              
+            </div>
+          )}
         </div>
 
         {/* 2. LOGO BRAND CENTRED (Screenshot 1) */}
@@ -195,11 +288,11 @@ const [openSection, setOpenSection] = useState<string | null>(null);
         {/* 3. REDES SOCIAIS */}
         <div className="mb-12 flex items-center justify-center gap-8 text-neutral-400">
           <a
-  href="https://www.instagram.com/ateliertl__/"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Acessar Instagram da TL Atelier"
->
+            href="https://www.instagram.com/ateliertl__/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Acessar Instagram da TL Atelier"
+          >
             <Instagram size={22} strokeWidth={1.5} />
           </a>
 
@@ -222,17 +315,20 @@ const [openSection, setOpenSection] = useState<string | null>(null);
 
         {/* 4. ACCORDIONS / MENU COLLAPSE (Screenshot 1) */}
         <div className="w-full border-t border-neutral-800 divide-y divide-neutral-800 text-xs sm:text-sm font-semibold tracking-wider uppercase mb-12">
-          
           {/* Section 1: SOBRE A TL ATELIER */}
           <div className="py-4">
-            <button 
-              onClick={() => toggleSection('sobre')}
+            <button
+              onClick={() => toggleSection("sobre")}
               className="w-full flex items-center justify-between text-left focus:outline-hidden text-neutral-200 hover:text-white"
             >
               <span>{sections.sobre.title}</span>
-              {openSection === 'sobre' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              {openSection === "sobre" ? (
+                <ChevronUp size={16} />
+              ) : (
+                <ChevronDown size={16} />
+              )}
             </button>
-            {openSection === 'sobre' && (
+            {openSection === "sobre" && (
               <p className="mt-3 text-neutral-400 font-normal lowercase tracking-normal normal-case leading-relaxed select-text">
                 {sections.sobre.content}
               </p>
@@ -241,14 +337,18 @@ const [openSection, setOpenSection] = useState<string | null>(null);
 
           {/* Section 2: AJUDA */}
           <div className="py-4">
-            <button 
-              onClick={() => toggleSection('ajuda')}
+            <button
+              onClick={() => toggleSection("ajuda")}
               className="w-full flex items-center justify-between text-left focus:outline-hidden text-neutral-200 hover:text-white"
             >
               <span>{sections.ajuda.title}</span>
-              {openSection === 'ajuda' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              {openSection === "ajuda" ? (
+                <ChevronUp size={16} />
+              ) : (
+                <ChevronDown size={16} />
+              )}
             </button>
-            {openSection === 'ajuda' && (
+            {openSection === "ajuda" && (
               <p className="mt-3 text-neutral-400 font-normal lowercase tracking-normal normal-case leading-relaxed select-text">
                 {sections.ajuda.content}
               </p>
@@ -257,20 +357,23 @@ const [openSection, setOpenSection] = useState<string | null>(null);
 
           {/* Section 3: SAC */}
           <div className="py-4">
-            <button 
-              onClick={() => toggleSection('sac')}
+            <button
+              onClick={() => toggleSection("sac")}
               className="w-full flex items-center justify-between text-left focus:outline-hidden text-neutral-200 hover:text-white"
             >
               <span>{sections.sac.title}</span>
-              {openSection === 'sac' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              {openSection === "sac" ? (
+                <ChevronUp size={16} />
+              ) : (
+                <ChevronDown size={16} />
+              )}
             </button>
-            {openSection === 'sac' && (
+            {openSection === "sac" && (
               <p className="mt-3 text-neutral-400 font-normal lowercase tracking-normal normal-case leading-relaxed select-text">
                 {sections.sac.content}
               </p>
             )}
           </div>
-
         </div>
 
         {/* 5. FORMAS DE PAGAMENTO E SEGURANÇA */}
@@ -292,7 +395,7 @@ const [openSection, setOpenSection] = useState<string | null>(null);
           </p>
 
           <p className="mt-4 text-xs sm:text-[13px]">
-            Desenvolvido por{' '}
+            Desenvolvido por{" "}
             <a
               href="https://ghzstudiooficial.com.br"
               target="_blank"
@@ -304,7 +407,6 @@ const [openSection, setOpenSection] = useState<string | null>(null);
             </a>
           </p>
         </div>
-
       </div>
     </footer>
   );
