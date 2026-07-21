@@ -114,6 +114,46 @@ material: 'Prata 925 legítima',
     ],
   },
 
+  {
+  id: '16',
+  slug: 'colar-coracao-de-luz-prata-925',
+  name: 'COLAR AMORA PRATA 925',
+  price: 81.15,
+  originalPrice: 189.59,
+  discountBadge: '57% OFF',
+  category: 'colares',
+  shortDescription:
+    'Colar antialérgico em Prata 925 com ponto de luz em formato de coração.',
+  description:
+    'O Colar Coração de Luz é produzido em Prata 925 legítima com acabamento antialérgico. Seu pingente em formato de coração recebe uma pedra lapidada que reflete a luz com delicadeza, criando uma joia romântica e elegante para usar diariamente ou presentear alguém especial.',
+  isFeatured: false,
+  isLancamento: false,
+  material: 'Prata 925 legítima e antialérgica',
+  warranty: '2 anos',
+  image: '/colar-coracao.png',
+  images: ['/colar-coracao.png'],
+},
+
+{
+  id: '17',
+  slug: 'colar-gota-prata-925',
+  name: 'COLAR GOTA PRATA 925',
+  price: 87.79,
+  originalPrice: 179.9,
+  discountBadge: '49% OFF',
+  category: 'colares',
+  shortDescription:
+    'Colar antialérgico em Prata 925 com delicado pingente em formato de gota.',
+  description:
+    'O Colar Gota é produzido em Prata 925 legítima com acabamento antialérgico. Seu pingente em formato de gota recebe uma pedra delicada que reflete a luz com elegância. Uma joia versátil para complementar produções do dia a dia ou presentear alguém especial.',
+  isFeatured: false,
+  isLancamento: false,
+  material: 'Prata 925 legítima e antialérgica',
+  warranty: '2 anos',
+  image: '/colar-gota.png',
+  images: ['/colar-gota.png'],
+},
+
   // PULSEIRAS
   {
     id: '5',
@@ -282,6 +322,26 @@ material: 'Prata 925 legítima',
     image: '/conjunto-aura-dourada.jpeg',
     images: ['/conjunto-aura-dourada.jpeg'],
   },
+
+  {
+  id: '18',
+  slug: 'conjunto-masculino-banhado-a-ouro',
+  name: 'CONJUNTO MASCULINO BANHADO A OURO',
+  price: 138.9,
+  originalPrice: 203.68,
+  discountBadge: '32% OFF',
+  category: 'conjuntos',
+  shortDescription:
+    'Conjunto masculino composto por corrente e pulseira banhadas a ouro.',
+  description:
+    'O Conjunto Masculino Banhado a Ouro é composto por corrente e pulseira com elos de visual marcante e acabamento dourado. As duas peças podem ser usadas juntas ou separadamente, criando combinações versáteis para diferentes ocasiões.',
+  isFeatured: false,
+  isLancamento: false,
+  material: 'Banhado a ouro',
+  warranty: '1 ano',
+  image: '/conjunto-masculino.jpeg',
+  images: ['/conjunto-masculino.jpeg'],
+},
 
   // ANÉIS
   {
