@@ -1,23 +1,12 @@
-interface CategoriesProps {
-  selectedCategory:
-    | 'colares'
-    | 'pulseiras'
-    | 'brincos'
-    | 'conjuntos'
-    | null;
+import type { ProductCategory } from '../types/product';
 
-  onSelectCategory: (
-    category:
-      | 'colares'
-      | 'pulseiras'
-      | 'brincos'
-      | 'conjuntos'
-      | null,
-  ) => void;
+interface CategoriesProps {
+  selectedCategory: ProductCategory | null;
+  onSelectCategory: (category: ProductCategory | null) => void;
 }
 
 type Category = {
-  key: 'colares' | 'pulseiras' | 'brincos' | 'conjuntos';
+  key: ProductCategory;
   label: string;
   image: string;
   imageClassName: string;
@@ -52,19 +41,16 @@ export default function Categories({
       image: '/colecao-conjuntos.png',
       imageClassName: 'scale-100 object-center',
     },
+    {
+      key: 'aneis',
+      label: 'Anéis',
+      image: '/colecao-aneis.jpeg',
+      imageClassName: 'scale-100 object-center',
+    },
   ];
 
-  const handleSelectCategory = (
-    category: 'colares' | 'pulseiras' | 'brincos' | 'conjuntos',
-  ) => {
+    const handleSelectCategory = (category: ProductCategory) => {
     onSelectCategory(category);
-
-    const element = document.getElementById('colecao');
-
-    element?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
   };
 
   return (
@@ -95,11 +81,11 @@ export default function Categories({
             [-ms-overflow-style:none]
             [scrollbar-width:none]
             [&::-webkit-scrollbar]:hidden
-            sm:justify-center
             sm:gap-8
-            sm:overflow-visible
             sm:px-0
             md:gap-10
+            lg:justify-center
+            lg:overflow-visible
           "
         >
           {categoriesList.map((category) => {

@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { Instagram, Menu, Search, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import CustomCartIcon from './CustomCartIcon';
+import type { ProductCategory } from '../types/product';
 
 const INSTAGRAM_URL = 'https://www.instagram.com/ateliertl__/';
 
 interface NavbarProps {
   onSelectCategory?: (
-    category: 'colares' | 'pulseiras' | 'brincos' | null,
+    category: ProductCategory | null,
   ) => void;
+
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
@@ -16,7 +18,7 @@ interface NavbarProps {
 type NavLink = {
   label: string;
   href: string;
-  category: 'colares' | 'pulseiras' | 'brincos' | null;
+  category: ProductCategory | null;
 };
 
 export default function Navbar({
@@ -27,12 +29,42 @@ export default function Navbar({
   const { setIsOpen, itemCount } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navLinks: NavLink[] = [
-    { label: 'Início', href: '#inicio', category: null },
-    { label: 'Colares', href: '#colecao', category: 'colares' },
-    { label: 'Pulseiras', href: '#colecao', category: 'pulseiras' },
-    { label: 'Brincos', href: '#colecao', category: 'brincos' },
-    { label: 'Sobre', href: '#prata-925', category: null },
+    const navLinks: NavLink[] = [
+    {
+      label: 'Início',
+      href: '#inicio',
+      category: null,
+    },
+    {
+      label: 'Colares',
+      href: '#colecao',
+      category: 'colares',
+    },
+    {
+      label: 'Pulseiras',
+      href: '#colecao',
+      category: 'pulseiras',
+    },
+    {
+      label: 'Brincos',
+      href: '#colecao',
+      category: 'brincos',
+    },
+    {
+      label: 'Conjuntos',
+      href: '#colecao',
+      category: 'conjuntos',
+    },
+    {
+      label: 'Anéis',
+      href: '#colecao',
+      category: 'aneis',
+    },
+    {
+      label: 'Sobre',
+      href: '#prata-925',
+      category: null,
+    },
   ];
 
   const handleLinkClick = (link: NavLink) => {

@@ -2,7 +2,18 @@ export type ProductCategory =
   | 'colares'
   | 'pulseiras'
   | 'brincos'
-  | 'conjuntos';
+  | 'conjuntos'
+  | 'aneis';
+
+export type ChildType = 'menino' | 'menina';
+
+export interface ProductVariant {
+  id: string;
+  label: string;
+  childrenCount: number;
+  price: number;
+  originalPrice?: number;
+}
 
 export interface Product {
   id: string;
@@ -21,5 +32,7 @@ export interface Product {
   discountBadge?: string;
   isLancamento?: boolean;
   isBerloqueDesejado?: boolean;
+  variants?: ProductVariant[];
+  allowsChildSelection?: boolean;
+  ringSizes?: number[];
 }
-

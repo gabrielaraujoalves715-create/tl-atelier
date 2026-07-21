@@ -84,7 +84,7 @@ const [openSection, setOpenSection] = useState<string | null>(null);
   };
 
   return (
-    <footer className="bg-black text-white py-16 px-4 select-none border-t border-neutral-800">
+    <footer className="select-none border-t border-neutral-800 bg-black px-4 pb-8 pt-16 text-white">
       <div className="max-w-4xl mx-auto flex flex-col items-center">
         
         {/* 1. NEWSLETTER */}
@@ -180,6 +180,7 @@ const [openSection, setOpenSection] = useState<string | null>(null);
     </p>
   </div>
 )}
+        </div>
 
         {/* 2. LOGO BRAND CENTRED (Screenshot 1) */}
         <div className="flex flex-col items-center text-center mt-6 mb-8">
@@ -282,13 +283,28 @@ const [openSection, setOpenSection] = useState<string | null>(null);
           />
         </div>
 
-        {/* 7. COPYRIGHT BAR (Screenshot 1) */}
-        <div className="w-full text-center text-[9px] sm:text-[10px] text-neutral-500 tracking-wider">
+        {/* 7. COPYRIGHT E CRÉDITO */}
+        <div className="w-full text-center text-[11px] leading-relaxed tracking-wide text-neutral-400 sm:text-xs">
           <p>© {new Date().getFullYear()} TL ATELIER PRATAS</p>
-          <p className="mt-1 lowercase first-letter:uppercase">• Todos os direitos reservados.</p>
+
+          <p className="mt-1 lowercase first-letter:uppercase">
+            • Todos os direitos reservados.
+          </p>
+
+          <p className="mt-4 text-xs sm:text-[13px]">
+            Desenvolvido por{' '}
+            <a
+              href="https://ghzstudiooficial.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Acessar o site da GHZ Studio"
+              className="font-bold text-white transition-colors hover:text-brand-dark-rose focus-visible:outline-none focus-visible:text-brand-dark-rose"
+            >
+              GHZ Studio
+            </a>
+          </p>
         </div>
 
-              </div>
       </div>
     </footer>
   );

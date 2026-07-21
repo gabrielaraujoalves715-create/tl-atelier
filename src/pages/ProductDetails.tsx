@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowLeft, ShoppingBag, Check, Shield, Clock } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -8,6 +8,7 @@ import ProductCard from '../components/ProductCard';
 import { ImagePlaceholder } from '../components/ImagePlaceholder';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
+import type { ChildType } from '../types/product';
 
 const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
@@ -16,12 +17,46 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const { addItemWithQuantity, setIsOpen } = useCart();
 
+  const product = products.find((p) => p.slug === slug);
+  const initialVariant = product?.variants?.[0];
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
+  const [selectedRingSize, setSelectedRingSize] = useState<number | null>(null);
+  const [ringSizeError, setRingSizeError] = useState(false);
+  const [selectedVariantId, setSelectedVariantId] = useState(
+    initialVariant?.id ?? '',
+  );
+  const [selectedChildren, setSelectedChildren] = useState<ChildType[]>(
+    initialVariant
+      ? Array<ChildType>(initialVariant.childrenCount).fill('menino')
+      : [],
+  );
 
-  const product = products.find((p) => p.slug === slug);
+  useEffect(() => {
+    const firstVariant = product?.variants?.[0];
+
+    setSelectedVariantId(firstVariant?.id ?? '');
+    setSelectedChildren(
+      firstVariant
+        ? Array<ChildType>(firstVariant.childrenCount).fill('menino')
+        : [],
+    );
+    setSelectedImage(0);
+    setQuantity(1);
+    setSelectedRingSize(null);
+    setRingSizeError(false);
+  }, [product]);
+
+  const selectedVariant =
+    product?.variants?.find((variant) => variant.id === selectedVariantId) ??
+    product?.variants?.[0];
+
+  const currentPrice = selectedVariant?.price ?? product?.price ?? 0;
+  const currentOriginalPrice =
+    selectedVariant?.originalPrice ?? product?.originalPrice;
 
   const related = product
     ? products
@@ -40,9 +75,71 @@ export default function ProductDetails() {
     navigate('/');
   };
 
+  const handleVariantChange = (variantId: string) => {
+    const variant = product?.variants?.find((item) => item.id === variantId);
+    if (!variant) return;
+
+    setSelectedVariantId(variant.id);
+    setSelectedChildren(
+      Array<ChildType>(variant.childrenCount).fill('menino'),
+    );
+  };
+
+  const handleChildTypeChange = (index: number, childType: ChildType) => {
+    setSelectedChildren((current) =>
+      current.map((item, itemIndex) =>
+        itemIndex === index ? childType : item,
+      ),
+    );
+  };
+
+  const handleRingSizeChange = (ringSize: number) => {
+    setSelectedRingSize(ringSize);
+    setRingSizeError(false);
+  };
+
+  const getChildrenLabel = () =>
+    selectedChildren
+      .map((child, index) =>
+        `${index + 1}º ${child === 'menino' ? 'Menino' : 'Menina'}`,
+      )
+      .join(', ');
+
   const handleAddToCart = () => {
     if (!product) return;
-    addItemWithQuantity(product, quantity);
+
+    if (product.ringSizes?.length && selectedRingSize === null) {
+      setRingSizeError(true);
+      return;
+    }
+
+    const childrenLabel = getChildrenLabel();
+    const configurationParts = [
+      selectedVariant?.id,
+      selectedChildren.length ? selectedChildren.join('-') : undefined,
+      selectedRingSize !== null ? `aro-${selectedRingSize}` : undefined,
+    ].filter(Boolean);
+    const configurationLabels = [
+      selectedVariant?.label,
+      childrenLabel || undefined,
+      selectedRingSize !== null ? `Aro ${selectedRingSize}` : undefined,
+    ].filter(Boolean);
+    const hasConfiguration = configurationParts.length > 0;
+
+    const configuredProduct = hasConfiguration
+      ? {
+          ...product,
+          id: `${product.id}-${configurationParts.join('-')}`,
+          name: `${product.name} — ${configurationLabels.join(' — ')}`,
+          price: currentPrice,
+          originalPrice: currentOriginalPrice,
+          variants: undefined,
+          allowsChildSelection: false,
+          ringSizes: undefined,
+        }
+      : product;
+
+    addItemWithQuantity(configuredProduct, quantity);
     setIsAdded(true);
     setTimeout(() => {
       setIsAdded(false);
@@ -52,13 +149,17 @@ export default function ProductDetails() {
 
   const buildWhatsAppUrl = () => {
     if (!product) return 'https://wa.me/5511965428500';
-    const unitPrice = formatter.format(product.price);
-    const total = formatter.format(product.price * quantity);
+    const unitPrice = formatter.format(currentPrice);
+    const total = formatter.format(currentPrice * quantity);
+    const childrenLabel = getChildrenLabel();
     const url = window.location.href;
     const message = [
       'Olá! Vim pelo site da TL Atelier e tenho interesse neste produto:',
       '',
       `Produto: ${product.name}`,
+      ...(selectedVariant ? [`Opção: ${selectedVariant.label}`] : []),
+      ...(childrenLabel ? [`Pingentes: ${childrenLabel}`] : []),
+      ...(selectedRingSize !== null ? [`Aro: ${selectedRingSize}`] : []),
       `Quantidade: ${quantity}`,
       `Valor unitário: ${unitPrice}`,
       `Total: ${total}`,
@@ -182,14 +283,14 @@ export default function ProductDetails() {
               </h1>
 
               {/* Preço */}
-              {product.price > 0 ? (
+              {currentPrice > 0 ? (
                 <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-brand-soft-rose/15">
                   <span className="text-2xl font-bold text-neutral-900">
-                    {formatter.format(product.price)}
+                    {formatter.format(currentPrice)}
                   </span>
-                  {product.originalPrice && (
+                  {currentOriginalPrice && (
                     <span className="text-sm text-neutral-400 line-through">
-                      {formatter.format(product.originalPrice)}
+                      {formatter.format(currentOriginalPrice)}
                     </span>
                   )}
                 </div>
@@ -198,6 +299,142 @@ export default function ProductDetails() {
                   <span className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-medium">
                     Preço a confirmar
                   </span>
+                </div>
+              )}
+
+              {/* Variações e personalização dos pingentes */}
+              {product.variants &&
+                product.variants.length > 0 &&
+                selectedVariant && (
+                  <div className="mb-6 pb-6 border-b border-brand-soft-rose/15">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-3">
+                      Quantidade de filhos
+                    </p>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
+                      {product.variants.map((variant) => {
+                        const isSelected = variant.id === selectedVariant.id;
+
+                        return (
+                          <button
+                            key={variant.id}
+                            type="button"
+                            onClick={() => handleVariantChange(variant.id)}
+                            aria-pressed={isSelected}
+                            className={`min-h-12 px-3 py-2 border text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark-rose ${
+                              isSelected
+                                ? 'border-brand-dark-rose bg-brand-dark-rose text-white'
+                                : 'border-[#E8E2DF] bg-white text-neutral-700 hover:border-brand-dark-rose'
+                            }`}
+                          >
+                            <span className="block">{variant.label}</span>
+                            <span
+                              className={`block mt-1 text-[10px] ${
+                                isSelected
+                                  ? 'text-white/80'
+                                  : 'text-neutral-500'
+                              }`}
+                            >
+                              {formatter.format(variant.price)}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {product.allowsChildSelection && (
+                      <div>
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-1">
+                          Personalize os pingentes
+                        </p>
+                        <p className="text-xs text-neutral-500 mb-4">
+                          Escolha menino ou menina para cada filho.
+                        </p>
+
+                        <div className="flex flex-col gap-3">
+                          {selectedChildren.map((childType, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center justify-between gap-4"
+                            >
+                              <span className="text-xs font-semibold text-neutral-700">
+                                Filho {index + 1}
+                              </span>
+
+                              <div className="grid grid-cols-2 w-full max-w-[240px] border border-[#E8E2DF]">
+                                {(['menino', 'menina'] as ChildType[]).map(
+                                  (option) => {
+                                    const isSelected = childType === option;
+
+                                    return (
+                                      <button
+                                        key={option}
+                                        type="button"
+                                        onClick={() =>
+                                          handleChildTypeChange(index, option)
+                                        }
+                                        aria-pressed={isSelected}
+                                        className={`min-h-10 px-3 text-xs font-semibold capitalize transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-dark-rose ${
+                                          isSelected
+                                            ? 'bg-neutral-900 text-white'
+                                            : 'bg-white text-neutral-600 hover:bg-neutral-50'
+                                        }`}
+                                      >
+                                        {option}
+                                      </button>
+                                    );
+                                  },
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+              {/* Seleção dos tamanhos disponíveis para anéis */}
+              {product.ringSizes && product.ringSizes.length > 0 && (
+                <div className="mb-6 pb-6 border-b border-brand-soft-rose/15">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-1">
+                    Escolha o tamanho do aro
+                  </p>
+                  <p className="text-xs text-neutral-500 mb-4">
+                    Selecione uma numeração antes de adicionar à sacola.
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {product.ringSizes.map((ringSize) => {
+                      const isSelected = selectedRingSize === ringSize;
+
+                      return (
+                        <button
+                          key={ringSize}
+                          type="button"
+                          onClick={() => handleRingSizeChange(ringSize)}
+                          aria-pressed={isSelected}
+                          aria-label={`Selecionar aro ${ringSize}`}
+                          className={`h-11 min-w-12 border px-4 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark-rose ${
+                            isSelected
+                              ? 'border-brand-dark-rose bg-brand-dark-rose text-white'
+                              : 'border-[#E8E2DF] bg-white text-neutral-700 hover:border-brand-dark-rose'
+                          }`}
+                        >
+                          {ringSize}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {ringSizeError && (
+                    <p
+                      role="alert"
+                      className="mt-3 text-xs font-semibold text-red-600"
+                    >
+                      Selecione o tamanho do aro para continuar.
+                    </p>
+                  )}
                 </div>
               )}
 
@@ -296,6 +533,15 @@ export default function ProductDetails() {
 
                 <a
                   href={buildWhatsAppUrl()}
+                  onClick={(event) => {
+                    if (
+                      product.ringSizes?.length &&
+                      selectedRingSize === null
+                    ) {
+                      event.preventDefault();
+                      setRingSizeError(true);
+                    }
+                  }}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Comprar ${product.name} pelo WhatsApp`}

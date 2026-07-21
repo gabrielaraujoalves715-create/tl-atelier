@@ -73,23 +73,31 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
 
-        {product.price > 0 && (
-          <div className="mb-3 flex items-baseline space-x-2 border-t border-brand-soft-rose/10 pt-2.5">
-            <span className="text-[15px] font-bold text-neutral-900">
-              {product.price.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              })}
-            </span>
+                {product.price > 0 && (
+          <div className="mb-3 border-t border-brand-soft-rose/10 pt-2.5">
+            {product.variants && product.variants.length > 0 && (
+              <span className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.15em] text-brand-dark-rose">
+                A partir de
+              </span>
+            )}
 
-            {product.originalPrice && (
-              <span className="text-[11px] text-neutral-400 line-through">
-                {product.originalPrice.toLocaleString('pt-BR', {
+            <div className="flex items-baseline gap-2">
+              <span className="text-[15px] font-bold text-neutral-900">
+                {product.price.toLocaleString('pt-BR', {
                   style: 'currency',
                   currency: 'BRL',
                 })}
               </span>
-            )}
+
+              {product.originalPrice && (
+                <span className="text-[11px] text-neutral-400 line-through">
+                  {product.originalPrice.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </span>
+              )}
+            </div>
           </div>
         )}
 
