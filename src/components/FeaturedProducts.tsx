@@ -18,11 +18,11 @@ export default function FeaturedProducts() {
       <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
           <h2 className="font-sans text-2xl font-light leading-tight tracking-wide text-neutral-900 sm:text-3xl">
-            Peças em destaque
+            As escolhas mais amandas pela nossas clientes.
           </h2>
 
           <p className="mt-3 text-xs font-light tracking-wide text-neutral-500 sm:text-sm">
-            Uma seleção de joias em Prata 925 legítima.
+            Para você brilhar ainda mais com exclusividade.
           </p>
 
           <div className="mx-auto mt-5 h-px w-12 bg-brand-dark-rose/40" />

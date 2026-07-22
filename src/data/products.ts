@@ -2,25 +2,33 @@
 
 export const products: Product[] = [
   // COLARES
-  {
-    id: '1',
-    slug: 'colar-ponto-de-luz-lilas-prata-925',
-    name: 'COLAR LAVANDA PRATA 925',
-    price: 75.49,
-    originalPrice: 143.93,
-    discountBadge: '48% OFF',
-    category: 'colares',
-    shortDescription:
-      'Colar delicado em Prata 925 com ponto de luz lilás, perfeito para iluminar o visual com elegância.',
-    description:
-      'O Colar Ponto de Luz Lilás em Prata 925 combina delicadeza e um toque de cor em uma peça versátil. Seu pingente redondo realça o brilho da pedra lilás, enquanto a corrente fina proporciona um acabamento leve e elegante. Ideal para usar sozinho ou em composições com outros colares.',
-    isFeatured: false,
-isLancamento: true,
-material: 'Prata 925 legítima',
-    warranty: '2 anos',
-    image: '/colar-ponto-de-luz-lilas-02.png',
-    images: ['/colar-ponto-de-luz-lilas-02.png'],
-  },
+    {
+  id: '1',
+  slug: 'colar-ponto-de-luz-lilas-prata-925',
+  name: 'COLAR LAVANDA PRATA 925',
+  price: 75.49,
+  originalPrice: 143.93,
+  discountBadge: '48% OFF',
+  category: 'colares',
+
+  shortDescription:
+    'Colar delicado em Prata 925 com ponto de luz lilás, perfeito para iluminar o visual com elegância.',
+
+  description:
+    'O Colar Ponto de Luz Lilás em Prata 925 combina delicadeza e um toque de cor em uma peça versátil. Seu pingente redondo realça o brilho da pedra lilás, enquanto a corrente fina proporciona um acabamento leve e elegante. Ideal para usar sozinho ou em composições com outros colares.',
+
+  isFeatured: false,
+  isLancamento: true,
+  material: 'Prata 925 legítima',
+  warranty: '2 anos',
+
+  image: '/colar-ponto-de-luz-lilas-02.png',
+
+  images: [
+    '/colar-ponto-de-luz-lilas-02.png',
+    '/colar-lavanda-caixa.jpeg',
+  ],
+},
   {
     id: '2',
     slug: 'colar-infinito-prata-925',
@@ -267,43 +275,86 @@ material: 'Prata 925 legítima',
     images: ['/argolinha-cravejada.jpeg'],
   },
   {
-    id: '9',
-    slug: 'argolinhas-pontos-de-luz-prata-925',
-    name: 'ARGOLINHAS PONTOS DE LUZ PRATA 925',
-    price: 68.79,
-    originalPrice: 147.16,
-    discountBadge: '53% OFF',
-    category: 'brincos',
-    shortDescription:
-      'Argolinhas antialérgicas em Prata 925 com delicados pontos de luz cravejados.',
-    description:
-      'As Argolinhas Pontos de Luz são produzidas em Prata 925 legítima com acabamento antialérgico. Seus detalhes cravejados refletem a luz com delicadeza e proporcionam um brilho elegante. Uma joia moderna e versátil para usar diariamente ou criar combinações com outros brincos.',
-    isFeatured: false,
-    material: 'Prata 925 legítima e antialérgica',
-    warranty: '2 anos',
-    image: '/brinco-argola-ponto-de-luz.jpeg',
-    images: ['/brinco-argola-ponto-de-luz.jpeg'],
-  },
+  id: '9',
+  slug: 'argolinhas-pontos-de-luz-prata-925',
+  name: 'ARGOLINHAS PONTOS DE LUZ PRATA 925',
+  price: 68.79,
+  originalPrice: 147.16,
+  discountBadge: '53% OFF',
+  category: 'brincos',
+
+  shortDescription:
+    'Argolinhas antialérgicas em Prata 925 com delicados pontos de luz cravejados.',
+
+  description:
+    'As Argolinhas Pontos de Luz são produzidas em Prata 925 legítima com acabamento antialérgico. Seus detalhes cravejados refletem a luz com delicadeza e proporcionam um brilho elegante. Uma joia moderna e versátil para usar diariamente ou criar combinações com outros brincos.',
+
+  isFeatured: false,
+  material: 'Prata 925 legítima e antialérgica',
+  warranty: '2 anos',
+
+  image: '/brinco-argola-ponto-de-luz.jpeg',
+
+  images: [
+    '/brinco-argola-ponto-de-luz.jpeg',
+    '/argolinha-ponto-de-luz-detalhe.jpeg',
+  ],
+},
+
+  {
+  id: '12',
+  slug: 'brinco-diamante-prata-925',
+  name: 'BRINCO DIAMANTE PRATA 925',
+  price: 44.39,
+  originalPrice: 85.38,
+  discountBadge: '48% OFF',
+  category: 'brincos',
+
+  shortDescription:
+    'Brinco delicado em Prata 925 com pedra redonda brilhante, ideal para trazer elegância e luminosidade ao visual.',
+
+  description:
+    'O Brinco Diamante em Prata 925 apresenta uma pedra redonda com brilho intenso e acabamento delicado. Seu design clássico combina facilmente com diferentes estilos, sendo uma opção versátil para usar no dia a dia ou em ocasiões especiais.',
+
+  isFeatured: false,
+  isLancamento: true,
+  material: 'Prata 925 legítima',
+  warranty: '2 anos',
+
+  image: '/brinco-diamante.jpeg',
+
+  images: [
+    '/brinco-diamante.jpeg',
+  ],
+},
 
   // CONJUNTOS
   {
-    id: '10',
-    slug: 'conjunto-bolinhas-prata-925',
-    name: 'CONJUNTO PÉROLA PRATA 925',
-    price: 165.87,
-    originalPrice: 220.35,
-    discountBadge: '25% OFF',
-    category: 'conjuntos',
-    shortDescription:
-      'Design delicado com pequenas bolinhas distribuídas pela corrente, criando pontos de brilho sutis e elegantes.',
-    description:
-      'O Conjunto Pérola em Prata 925 combina delicadeza e versatilidade em peças que valorizam o visual com brilho discreto. As pequenas bolinhas distribuídas pelas correntes criam um acabamento elegante, ideal para usar no dia a dia ou complementar produções especiais.',
-    isFeatured: true,
-    material: 'Prata 925 legítima',
-    warranty: '2 anos',
-    image: '/conjunto-bolinhas-prata-925.png',
-    images: ['/conjunto-bolinhas-prata-925.png'],
-  },
+  id: '10',
+  slug: 'conjunto-bolinhas-prata-925',
+  name: 'CONJUNTO PÉROLA PRATA 925',
+  price: 165.87,
+  originalPrice: 220.35,
+  discountBadge: '25% OFF',
+  category: 'conjuntos',
+
+  shortDescription:
+    'Design delicado com pequenas bolinhas distribuídas pela corrente, criando pontos de brilho sutis e elegantes.',
+
+  description:
+    'O Conjunto Pérola em Prata 925 combina delicadeza e versatilidade em peças que valorizam o visual com brilho discreto. As pequenas bolinhas distribuídas pelas correntes criam um acabamento elegante, ideal para usar no dia a dia ou complementar produções especiais.',
+
+  isFeatured: true,
+  material: 'Prata 925 legítima',
+  warranty: '2 anos',
+
+  image: '/conjunto-bolinhas-prata-925.png',
+
+  images: [
+    '/conjunto-bolinhas-prata-925.png',
+    '/conjunto-perola-caixa.png',
+  ],
+},
   {
     id: '11',
     slug: 'conjunto-aura-dourada',
@@ -383,3 +434,4 @@ material: 'Prata 925 legítima',
     ringSizes: [14, 16, 18, 20, 22],
   },
 ];
+

@@ -25,7 +25,7 @@ export default function NewReleases() {
           </h2>
 
           <p className="mt-3 text-xs font-light tracking-wide text-neutral-500 sm:text-sm">
-            As joias favoritas de quem reconhece a verdadeira Prata 925.
+            As joias favoritas de quem conhece a verdadeira Prata 925.
           </p>
 
           <div className="mx-auto mt-5 h-px w-12 bg-brand-dark-rose/40" />
