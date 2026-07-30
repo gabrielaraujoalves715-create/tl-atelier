@@ -26,12 +26,16 @@ export interface Product {
   shortDescription?: string;
   material?: string;
   warranty?: string;
+
   isFeatured?: boolean;
+  isBestSeller?: boolean;
+  isLancamento?: boolean;
+  isBerloqueDesejado?: boolean;
+
   image?: string;
   images?: string[];
   discountBadge?: string;
-  isLancamento?: boolean;
-  isBerloqueDesejado?: boolean;
+
   variants?: ProductVariant[];
   allowsChildSelection?: boolean;
   ringSizes?: number[];
