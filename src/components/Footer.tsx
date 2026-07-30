@@ -113,7 +113,7 @@ export default function Footer() {
     sac: {
       title: "SAC",
       content:
-        "Precisa de suporte? Entre em contato pelo WhatsApp (11) 96542-8500 ou pelo e-mail sac@ateliertl.com.br. Nosso horário de atendimento é de segunda a sexta-feira, das 09:00 às 18:00.",
+        "Precisa de suporte? Entre em contato pelo WhatsApp (11) 96542-8500 ou pelo e-mail tlatelier10@gmail.com.br. Nosso horário de atendimento é de segunda a sexta-feira, das 09:00 às 22:00.",
     },
   };
 
