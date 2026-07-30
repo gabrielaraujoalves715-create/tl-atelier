@@ -23,7 +23,7 @@ export default function EditorialSection() {
 >
   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xs bg-neutral-100">
     <img
-      src="/colar-lilas-modelo-close.webp"
+      src="/colar-lilas-modelo-close.jpeg"
       alt="Modelo usando colar lilás em Prata 925"
       loading="lazy"
       decoding="async"

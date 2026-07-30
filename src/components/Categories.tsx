@@ -22,19 +22,19 @@ export default function Categories({
     {
       key: 'colares',
       label: 'Colares',
-      image: '/colecao-colares.jpeg',
+      image: '/colecao-colares.webp',
       imageClassName: 'scale-100 object-center',
     },
     {
       key: 'pulseiras',
       label: 'Pulseiras',
-      image: '/colecao-pulseiras.jpeg',
+      image: '/colecao-pulseiras.webp',
       imageClassName: 'scale-100 object-center',
     },
     {
       key: 'brincos',
       label: 'Brincos',
-      image: '/colecao-brincos.jpeg',
+      image: '/colecao-brincos.webp',
       imageClassName: 'scale-[2.2] object-center',
     },
     {
@@ -46,7 +46,7 @@ export default function Categories({
     {
       key: 'aneis',
       label: 'Anéis',
-      image: '/colecao-aneis.jpeg',
+      image: '/colecao-aneis.webp',
       imageClassName: 'scale-100 object-center',
     },
   ];

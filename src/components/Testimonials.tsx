@@ -12,15 +12,15 @@ export default function Testimonials() {
 
   const testimonials: TestimonialImage[] = [
     {
-      src: '/depoimento-1.jpeg',
+      src: '/depoimento-1.webp',
       alt: 'Depoimento de cliente da TL Atelier',
     },
     {
-      src: '/depoimento-2.jpeg',
+      src: '/depoimento-2.webp',
       alt: 'Avaliação de cliente da TL Atelier',
     },
     {
-      src: '/depoimento-3.jpeg',
+      src: '/depoimento-3.webp',
       alt: 'Feedback de cliente da TL Atelier',
     },
   ];
