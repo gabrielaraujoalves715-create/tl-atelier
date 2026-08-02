@@ -49,35 +49,26 @@ export default function BestSellers() {
           id="mais-vendidos"
           className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8"
         >
-          <div className="mb-10 border-b border-brand-soft-rose/20 pb-7">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <h1 className="font-serif text-4xl font-medium text-brand-text sm:text-5xl">
-                  Mais vendidos
-                </h1>
-
-                <p className="mt-3 max-w-xl text-sm leading-relaxed text-brand-text/60">
-                  Conheça as joias mais escolhidas pelas nossas clientes.
-                </p>
-              </div>
-            </div>
+          {/* Título centralizado */}
+          <div className="mb-10 border-b border-brand-soft-rose/20 pb-7 text-center">
+            <h1 className="font-serif text-4xl font-medium text-brand-text sm:text-5xl">
+              Mais vendidos
+            </h1>
           </div>
 
           {bestSellerProducts.length > 0 ? (
             <div
               className="
-                grid w-full grid-cols-2 gap-3
-                sm:gap-5
-                md:grid-cols-3
-                lg:grid-cols-4
-                2xl:grid-cols-5
+                grid w-full
+                grid-cols-2
+                gap-x-3 gap-y-8
+                sm:gap-x-5
+                md:grid-cols-3 md:gap-y-10
+                lg:grid-cols-4 lg:gap-x-6
               "
             >
               {bestSellerProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="flex min-w-0"
-                >
+                <div key={product.id} className="min-w-0">
                   <ProductCard product={product} />
                 </div>
               ))}

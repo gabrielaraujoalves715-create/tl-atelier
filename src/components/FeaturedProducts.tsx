@@ -29,16 +29,23 @@ export default function FeaturedProducts() {
           <div className="mx-auto mt-5 h-px w-12 bg-brand-dark-rose/40" />
         </div>
 
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-          {featured.map((product) => (
+        <div
+          className="
+            grid w-full
+            grid-cols-2
+            gap-x-4 gap-y-8
+            sm:gap-x-6
+            md:grid-cols-4
+            lg:grid-cols-5
+          "
+        >
+          {featured.map((product, index) => (
             <div
               key={product.id}
-              className="
-                flex w-[calc(50%-0.5rem)]
-                md:w-[calc(33.333333%-1rem)]
-                lg:w-[calc(25%-1.125rem)]
-                xl:w-[calc(20%-1.2rem)]
-              "
+              className={`
+                min-w-0
+                ${index === 4 ? 'hidden lg:block' : ''}
+              `}
             >
               <ProductCard product={product} />
             </div>
