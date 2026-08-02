@@ -126,7 +126,7 @@ export default function EditorialSection() {
 >
   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xs bg-neutral-100">
     <img
-      src="/editorial-aneis-modelo-realista.webp"
+      src="//editorial-aneis-modelo-realista-otimizado.webp"
       alt="Mão de modelo usando anéis em Prata 925"
       loading="lazy"
       decoding="async"

@@ -40,7 +40,7 @@ export default function Categories({
     {
       key: 'conjuntos',
       label: 'Conjuntos',
-      image: '/colecao-conjuntos.png',
+      image: '/colecao-conjuntos.webp',
       imageClassName: 'scale-100 object-center',
     },
     {

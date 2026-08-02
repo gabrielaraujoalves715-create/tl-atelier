@@ -23,10 +23,10 @@ export const products: Product[] = [
   material: 'Prata 925 legítima',
   warranty: '2 anos',
 
-  image: '/colar-ponto-de-luz-lilas-02.png',
+  image: '/colar-ponto-de-luz-lilas-02.webp',
 
   images: [
-    '/colar-ponto-de-luz-lilas-02.png',
+    '/colar-ponto-de-luz-lilas-02.webp',
     '/colar-lavanda-caixa.jpeg',
   ],
 },
@@ -47,8 +47,8 @@ export const products: Product[] = [
     isLancamento: true,
     material: 'Prata 925 legítima',
     warranty: '2 anos',
-    image: '/colar-infinito-prata-925.png',
-    images: ['/colar-infinito-prata-925.png'],
+    image: '/colar-infinito-prata-925.webp',
+    images: ['/colar-infinito-prata-925.webp'],
   },
   {
     id: '3',
@@ -358,11 +358,11 @@ material: 'Prata 925 legítima',
   material: 'Prata 925 legítima',
   warranty: '2 anos',
 
-  image: '/conjunto-bolinhas-prata-925.png',
+  image: '/conjunto-bolinhas-prata-925.webp',
 
   images: [
-    '/conjunto-bolinhas-prata-925..webp',
-    '/conjunto-perola-caixa.png',
+    '/conjunto-bolinhas-prata-925.webp',
+    '/conjunto-perola-caixa.webp',
   ],
 },
   {

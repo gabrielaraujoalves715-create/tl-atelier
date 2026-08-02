@@ -22,6 +22,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             <img
               src={product.image}
               alt={product.name}
+              width={800}
+              height={1000}
+              loading="lazy"
+              decoding="async"
               className="block h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
@@ -73,7 +77,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
 
-                {product.price > 0 && (
+        {product.price > 0 && (
           <div className="mb-3 border-t border-brand-soft-rose/10 pt-2.5">
             {product.variants && product.variants.length > 0 && (
               <span className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.15em] text-brand-dark-rose">
