@@ -1,13 +1,6 @@
+import { Link } from 'react-router-dom';
+
 export default function Hero() {
-  const handleScrollToCollection = () => {
-    const collection = document.getElementById('colecao');
-
-    collection?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  };
-
   return (
     <section
       id="inicio"
@@ -21,13 +14,14 @@ export default function Hero() {
       <picture className="absolute inset-0 block h-full w-full">
         <source
           media="(min-width: 768px)"
-          srcSet="/banner-tl-desktop.png"
+          srcSet="/banner-tl-desktop.webp"
         />
 
         <img
-          src="/banner-tl-mobile.png"
+          src="/banner-tl-mobile.webp"
           alt="TL Atelier — joias em Prata 925"
           className="h-full w-full object-cover object-center"
+          loading="eager"
           fetchPriority="high"
         />
       </picture>
@@ -35,40 +29,60 @@ export default function Hero() {
       {/* Botão da Hero */}
       <div
         className="
-          absolute left-0 top-[43%] z-10
-          flex w-full justify-start px-3
+          absolute left-0 top-[48%] z-10
+          flex w-full justify-start pl-1
           md:inset-0 md:mx-auto md:h-full
           md:max-w-7xl md:items-end
           md:px-8 md:pb-12
           lg:px-20 lg:pb-16
         "
       >
-        <button
-  type="button"
-  onClick={handleScrollToCollection}
-  id="hero-view-collection"
-  className="
-    flex h-[38px] w-[175px]
-    cursor-pointer items-center justify-center
-    border border-neutral-900
-    bg-transparent px-5
-    text-[13px] font-normal normal-case
-    tracking-normal text-neutral-900
-    transition-colors duration-300
-    hover:bg-neutral-900 hover:text-white
-    focus-visible:outline focus-visible:outline-2
-    focus-visible:outline-offset-2
-    focus-visible:outline-neutral-900
-    md:h-12 md:w-auto md:max-w-none
-    md:px-10
-    md:text-xs md:font-bold md:uppercase
-    md:tracking-[0.25em]
-  "
->
-  Ver coleção
-</button>
+        <Link
+          to="/mais-vendidos"
+          id="hero-view-collection"
+          className="
+            flex h-[34px] w-[150px]
+            cursor-pointer items-center justify-center
+            border border-neutral-900
+            bg-transparent px-4
+            text-[12px] font-normal
+            text-neutral-900
+            transition-colors duration-300
+            hover:bg-neutral-900 hover:text-white
+            focus-visible:outline focus-visible:outline-2
+            focus-visible:outline-offset-2
+            focus-visible:outline-neutral-900
+            md:h-12 md:w-auto md:px-10
+            md:text-xs md:font-bold md:uppercase
+            md:tracking-[0.25em]
+          "
+        >
+          Ver coleção
+        </Link>
+      </div>
 
-</div>
+      {/* Instagram no banner mobile */}
+      <a
+        href="https://www.instagram.com/ateliertl__/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Visitar o Instagram da TL Atelier"
+        className="
+          absolute bottom-4 left-1 z-20
+          inline-flex min-h-11 items-center
+          px-2
+          font-sans text-[14px] font-semibold uppercase
+          text-[#D18475]
+          transition-opacity duration-300
+          hover:opacity-70
+          focus-visible:outline focus-visible:outline-2
+          focus-visible:outline-offset-2
+          focus-visible:outline-[#D18475]
+          md:hidden
+        "
+      >
+        @ateliertl__
+      </a>
 
       {/* Identificação lateral no desktop */}
       <div className="absolute bottom-10 right-6 hidden flex-col items-center space-y-4 text-neutral-400 lg:flex">

@@ -50,8 +50,6 @@ export default function BestSellers() {
           className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8"
         >
           <div className="mb-10 border-b border-brand-soft-rose/20 pb-7">
-
-
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h1 className="font-serif text-4xl font-medium text-brand-text sm:text-5xl">
@@ -62,16 +60,23 @@ export default function BestSellers() {
                   Conheça as joias mais escolhidas pelas nossas clientes.
                 </p>
               </div>
-
             </div>
           </div>
 
           {bestSellerProducts.length > 0 ? (
-            <div className="flex w-full flex-wrap justify-center gap-5 sm:gap-6 lg:gap-8">
+            <div
+              className="
+                grid w-full grid-cols-2 gap-3
+                sm:gap-5
+                md:grid-cols-3
+                lg:grid-cols-4
+                2xl:grid-cols-5
+              "
+            >
               {bestSellerProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="flex w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333333%-1.334rem)]"
+                  className="flex min-w-0"
                 >
                   <ProductCard product={product} />
                 </div>
