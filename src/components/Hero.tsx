@@ -20,6 +20,8 @@ export default function Hero() {
         <img
           src="/banner-tl-mobile.webp"
           alt="TL Atelier — joias em Prata 925"
+          width={1080}
+          height={1350}
           className="h-full w-full object-cover object-center"
           loading="eager"
           fetchPriority="high"

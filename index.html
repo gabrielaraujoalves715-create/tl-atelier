@@ -8,20 +8,42 @@
       content="width=device-width, initial-scale=1.0"
     />
 
+    <!-- Carregamento prioritário do banner mobile -->
+    <link
+      rel="preload"
+      as="image"
+      href="/banner-tl-mobile.webp"
+      type="image/webp"
+      media="(max-width: 767px)"
+      fetchpriority="high"
+    />
+
+    <!-- Carregamento prioritário do banner desktop -->
+    <link
+      rel="preload"
+      as="image"
+      href="/banner-tl-desktop.webp"
+      type="image/webp"
+      media="(min-width: 768px)"
+      fetchpriority="high"
+    />
+
     <meta
       name="description"
       content="Descubra joias em Prata 925 na TL Atelier: colares, pulseiras, brincos, conjuntos e anéis para presentear ou destacar sua identidade."
     />
-   <link
-  rel="icon"
-  type="image/png"
-  href="/favicon-tl-atelier.png"
-/>
 
-<link
-  rel="apple-touch-icon"
-  href="/favicon-tl-atelier.png"
-/>
+    <link
+      rel="icon"
+      type="image/png"
+      href="/favicon-tl-atelier.png"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      href="/favicon-tl-atelier.png"
+    />
+
     <title>TL Atelier | Joias em Prata 925</title>
   </head>
 
