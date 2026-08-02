@@ -14,6 +14,15 @@ type Category = {
   imageClassName: string;
 };
 
+const createCategoryImageUrl = (
+  image: string,
+  width: 200 | 320,
+) =>
+  image.replace(
+    /\.[^/.]+$/,
+    `-thumb-${width}.webp`,
+  );
+
 export default function Categories({
   selectedCategory,
   onSelectCategory,
@@ -101,6 +110,18 @@ export default function Categories({
             const isSelected =
               selectedCategory === category.key;
 
+            const image200 =
+              createCategoryImageUrl(
+                category.image,
+                200,
+              );
+
+            const image320 =
+              createCategoryImageUrl(
+                category.image,
+                320,
+              );
+
             return (
               <button
                 key={category.key}
@@ -155,10 +176,30 @@ export default function Categories({
                 >
                   <div className="h-full w-full overflow-hidden rounded-full bg-white">
                     <img
-                      src={category.image}
+                      src={image200}
+                      srcSet={`${image200} 200w, ${image320} 320w`}
+                      sizes="
+                        (max-width: 639px) 100px,
+                        (max-width: 767px) 110px,
+                        (max-width: 1023px) 140px,
+                        160px
+                      "
                       alt={`Coleção de ${category.label.toLowerCase()}`}
+                      width={320}
+                      height={320}
                       loading="lazy"
                       decoding="async"
+                      onError={(event) => {
+                        const imageElement =
+                          event.currentTarget;
+
+                        imageElement.onerror = null;
+                        imageElement.removeAttribute(
+                          'srcset',
+                        );
+                        imageElement.src =
+                          category.image;
+                      }}
                       className={`
                         h-full
                         w-full

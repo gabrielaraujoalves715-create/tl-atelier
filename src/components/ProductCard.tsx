@@ -6,8 +6,30 @@ interface ProductCardProps {
   product: Product;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+const createCardImageUrl = (
+  image: string,
+  width: 360 | 640,
+) =>
+  image.replace(
+    /\.[^/.]+$/,
+    `-card-${width}.webp`,
+  );
+
+export default function ProductCard({
+  product,
+}: ProductCardProps) {
   const productUrl = `/produto/${product.slug}`;
+
+  // Garante que o valor seja sempre uma string
+  const originalImage = product.image ?? '';
+
+  const cardImage360 = originalImage
+    ? createCardImageUrl(originalImage, 360)
+    : '';
+
+  const cardImage640 = originalImage
+    ? createCardImageUrl(originalImage, 640)
+    : '';
 
   return (
     <div className="group flex h-full min-w-0 w-full flex-col overflow-hidden rounded-xs border border-brand-soft-rose/20 bg-white transition-all duration-300 hover:shadow-md">
@@ -18,14 +40,27 @@ export default function ProductCard({ product }: ProductCardProps) {
         className="block"
       >
         <div className="relative aspect-[4/5] w-full overflow-hidden border-b border-brand-soft-rose/10">
-          {product.image ? (
+          {originalImage ? (
             <img
-              src={product.image}
+              src={cardImage360}
+              srcSet={`${cardImage360} 360w, ${cardImage640} 640w`}
+              sizes="
+                (max-width: 639px) calc(100vw - 32px),
+                (max-width: 1023px) calc(50vw - 24px),
+                320px
+              "
               alt={product.name}
-              width={800}
-              height={1000}
+              width={640}
+              height={800}
               loading="lazy"
               decoding="async"
+              onError={(event) => {
+                const imageElement = event.currentTarget;
+
+                imageElement.onerror = null;
+                imageElement.removeAttribute('srcset');
+                imageElement.src = originalImage;
+              }}
               className="block h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
@@ -48,11 +83,13 @@ export default function ProductCard({ product }: ProductCardProps) {
                 select-none
               "
             >
-              {product.discountBadge.split(' ').map((part) => (
-                <span key={part} className="block">
-                  {part}
-                </span>
-              ))}
+              {product.discountBadge
+                .split(' ')
+                .map((part) => (
+                  <span key={part} className="block">
+                    {part}
+                  </span>
+                ))}
             </div>
           )}
         </div>
@@ -79,11 +116,12 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {product.price > 0 && (
           <div className="mb-3 border-t border-brand-soft-rose/10 pt-2.5">
-            {product.variants && product.variants.length > 0 && (
-              <span className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.15em] text-brand-dark-rose">
-                A partir de
-              </span>
-            )}
+            {product.variants &&
+              product.variants.length > 0 && (
+                <span className="mb-1 block text-[9px] font-semibold uppercase tracking-[0.15em] text-brand-dark-rose">
+                  A partir de
+                </span>
+              )}
 
             <div className="flex items-baseline gap-2">
               <span className="text-[15px] font-bold text-neutral-900">
@@ -95,10 +133,13 @@ export default function ProductCard({ product }: ProductCardProps) {
 
               {product.originalPrice && (
                 <span className="text-[11px] text-neutral-400 line-through">
-                  {product.originalPrice.toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })}
+                  {product.originalPrice.toLocaleString(
+                    'pt-BR',
+                    {
+                      style: 'currency',
+                      currency: 'BRL',
+                    },
+                  )}
                 </span>
               )}
             </div>

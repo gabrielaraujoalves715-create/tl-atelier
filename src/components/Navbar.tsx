@@ -1,17 +1,22 @@
 import { useState } from 'react';
-import { Instagram, Menu, Search, X } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import CustomCartIcon from './CustomCartIcon';
-import type { ProductCategory } from '../types/product';
+import {
+  Instagram,
+  Menu,
+  Search,
+  X,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import type { ProductCategory } from '../types/product';
+import CustomCartIcon from './CustomCartIcon';
 
-const INSTAGRAM_URL = 'https://www.instagram.com/ateliertl__/';
+const INSTAGRAM_URL =
+  'https://www.instagram.com/ateliertl__/';
 
 interface NavbarProps {
   onSelectCategory?: (
     category: ProductCategory | null,
   ) => void;
-
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
@@ -22,16 +27,7 @@ type NavLink = {
   category: ProductCategory | null;
 };
 
-export default function Navbar({
-  onSelectCategory,
-  searchQuery,
-  onSearchChange,
-}: NavbarProps) {
-  const { setIsOpen, itemCount } = useCart();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
-
-    const navLinks: NavLink[] = [
+const navLinks: NavLink[] = [
   {
     label: 'Início',
     href: '/',
@@ -69,41 +65,56 @@ export default function Navbar({
   },
 ];
 
+export default function Navbar({
+  searchQuery,
+  onSearchChange,
+}: NavbarProps) {
+  const { setIsOpen, itemCount } = useCart();
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] =
+    useState(false);
+
+  const navigate = useNavigate();
+
   const handleLinkClick = (link: NavLink) => {
-  setIsMobileMenuOpen(false);
+    setIsMobileMenuOpen(false);
 
-  if (link.label === 'Sobre') {
-    navigate('/');
+    if (link.label === 'Sobre') {
+      navigate('/');
 
+      window.setTimeout(() => {
+        document
+          .getElementById('prata-925')
+          ?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+      }, 100);
+
+      return;
+    }
+
+    navigate(link.href);
+  };
+
+  const scrollToCollection = () => {
     window.setTimeout(() => {
-      document.getElementById('prata-925')?.scrollIntoView({
+      const collection =
+        document.getElementById('colecao');
+
+      collection?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
-    }, 100);
-
-    return;
-  }
-
-  navigate(link.href);
-};
-
-const scrollToCollection = () => {
-  window.setTimeout(() => {
-    const collection = document.getElementById('colecao');
-
-    collection?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }, 50);
-};
+    }, 50);
+  };
 
   return (
     <div className="fixed left-0 top-0 z-50 flex w-full flex-col shadow-xs">
       {/* Barra promocional */}
       <div className="flex h-8 w-full select-none items-center justify-center border-b border-brand-dark-rose/25 bg-brand-dark-rose px-4 text-center text-[10px] font-semibold tracking-[0.18em] text-[#FFFDFC] sm:text-xs">
-        Em compras acima de R$ 199,90 ganhe um brinde exclusivo da TL Atelier. Aproveite!
+        Em compras acima de R$ 199,90 ganhe um
+        brinde exclusivo da TL Atelier. Aproveite!
       </div>
 
       <header
@@ -116,17 +127,31 @@ const scrollToCollection = () => {
           <div className="flex w-1/4 md:hidden">
             <button
               type="button"
-              onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+              onClick={() =>
+                setIsMobileMenuOpen(
+                  (isOpen) => !isOpen,
+                )
+              }
               className="p-1 text-brand-text transition-colors duration-200 hover:text-brand-dark-rose focus:outline-hidden"
-              aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+              aria-label={
+                isMobileMenuOpen
+                  ? 'Fechar menu'
+                  : 'Abrir menu'
+              }
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-navigation"
               id="mobile-menu-btn"
             >
               {isMobileMenuOpen ? (
-                <X size={23} className="stroke-[1.4]" />
+                <X
+                  size={23}
+                  className="stroke-[1.4]"
+                />
               ) : (
-                <Menu size={23} className="stroke-[1.4]" />
+                <Menu
+                  size={23}
+                  className="stroke-[1.4]"
+                />
               )}
             </button>
           </div>
@@ -160,8 +185,32 @@ const scrollToCollection = () => {
               className="flex items-center justify-center"
             >
               <img
-                src="/logo-tl-atelier.png"
+                src="/logo-tl-atelier-logo-260.webp"
+                srcSet="
+                  /logo-tl-atelier-logo-260.webp 260w,
+                  /logo-tl-atelier-logo-400.webp 400w
+                "
+                sizes="
+                  (max-width: 639px) 130px,
+                  (max-width: 767px) 160px,
+                  190px
+                "
                 alt="TL Atelier Pratas"
+                width={400}
+                height={200}
+                loading="eager"
+                decoding="async"
+                onError={(event) => {
+                  const imageElement =
+                    event.currentTarget;
+
+                  imageElement.onerror = null;
+                  imageElement.removeAttribute(
+                    'srcset',
+                  );
+                  imageElement.src =
+                    '/logo-tl-atelier.png';
+                }}
                 className="block h-auto w-[130px] object-contain sm:w-[160px] md:w-[190px]"
               />
             </a>
@@ -177,7 +226,10 @@ const scrollToCollection = () => {
               aria-label="Acessar Instagram da TL Atelier"
               id="instagram-link"
             >
-              <Instagram size={21} className="stroke-[1.3]" />
+              <Instagram
+                size={21}
+                className="stroke-[1.3]"
+              />
             </a>
 
             <button
@@ -189,22 +241,25 @@ const scrollToCollection = () => {
               }`}
               id="cart-btn"
             >
-              <CustomCartIcon itemCount={itemCount} size={27} />
+              <CustomCartIcon
+                itemCount={itemCount}
+                size={27}
+              />
             </button>
           </div>
         </div>
 
         {/* Navegação desktop */}
-       <nav className="hidden h-11 items-center justify-center text-[11px] font-bold uppercase tracking-[0.25em] text-brand-text/75 md:flex">
+        <nav className="hidden h-11 items-center justify-center text-[11px] font-bold uppercase tracking-[0.25em] text-brand-text/75 md:flex">
           <div className="flex items-center gap-10 lg:gap-12">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={(event) => {
-  event.preventDefault();
-  handleLinkClick(link);
-}}
+                  event.preventDefault();
+                  handleLinkClick(link);
+                }}
                 className="group relative py-1 transition-colors duration-200 hover:text-brand-dark-rose"
               >
                 {link.label}
@@ -262,7 +317,10 @@ const scrollToCollection = () => {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => handleLinkClick(link)}
+                onClick={(event) => {
+                  event.preventDefault();
+                  handleLinkClick(link);
+                }}
                 className="py-1 text-xs font-semibold uppercase tracking-widest text-brand-text transition-colors duration-200 hover:text-brand-dark-rose"
               >
                 {link.label}
@@ -276,7 +334,11 @@ const scrollToCollection = () => {
               aria-label="Acessar Instagram da TL Atelier"
               className="flex w-full items-center justify-center gap-2 border-t border-brand-soft-rose/20 pt-3 text-xs font-semibold uppercase tracking-widest text-brand-text transition-colors duration-200 hover:text-brand-dark-rose"
             >
-              <Instagram size={15} className="stroke-[1.5]" />
+              <Instagram
+                size={15}
+                className="stroke-[1.5]"
+              />
+
               <span>Instagram</span>
             </a>
           </div>
