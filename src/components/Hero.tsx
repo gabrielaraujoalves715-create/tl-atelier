@@ -10,6 +10,11 @@ export default function Hero() {
         md:mt-[208px] md:h-[600px] md:aspect-auto
       "
     >
+      {/* Título principal acessível e otimizado para SEO */}
+      <h1 className="sr-only">
+        TL Atelier — Joias em Prata 925 para marcar cada momento
+      </h1>
+
       {/* Banners responsivos */}
       <picture className="absolute inset-0 block h-full w-full">
         <source

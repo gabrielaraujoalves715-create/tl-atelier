@@ -1,7 +1,27 @@
 {
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index.php",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/mais-vendidos",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/produto/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/categoria/:category",
       "destination": "/index.html"
     }
   ]
