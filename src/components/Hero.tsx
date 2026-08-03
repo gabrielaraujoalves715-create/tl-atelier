@@ -35,38 +35,38 @@ export default function Hero() {
 
       {/* Botão da Hero */}
       <div
-  className="
-    absolute left-0 top-[48%] z-10
-    flex w-full justify-start pl-1
-    md:inset-0 md:mx-auto md:h-full
-    md:max-w-7xl md:items-end
-    md:px-8 md:pb-12
-    lg:px-20 lg:pb-16
-  "
->
-  <Link
-    to="/mais-vendidos"
-    id="hero-view-collection"
-    className="
-      flex h-[44px] w-[185px]
-      cursor-pointer items-center justify-center
-      border border-neutral-900
-      bg-transparent px-6
-      text-[14px] font-normal
-      text-neutral-900
-      transition-colors duration-300
-      hover:bg-neutral-900 hover:text-white
-      focus-visible:outline focus-visible:outline-2
-      focus-visible:outline-offset-2
-      focus-visible:outline-neutral-900
-      md:h-12 md:w-auto md:px-10
-      md:text-xs md:font-bold md:uppercase
-      md:tracking-[0.25em]
-    "
-  >
-    Ver coleção
-  </Link>
-</div>
+        className="
+          absolute left-0 top-[48%] z-10
+          flex w-full justify-start pl-1
+          md:inset-0 md:mx-auto md:h-full
+          md:max-w-7xl md:items-end
+          md:px-8 md:pb-12
+          lg:px-20 lg:pb-16
+        "
+      >
+        <Link
+          to="/mais-vendidos"
+          id="hero-view-collection"
+          className="
+            flex h-[44px] w-[165px]
+            cursor-pointer items-center justify-center
+            border border-neutral-900
+            bg-transparent px-6
+            text-[14px] font-normal
+            text-neutral-900
+            transition-colors duration-300
+            hover:bg-neutral-900 hover:text-white
+            focus-visible:outline focus-visible:outline-2
+            focus-visible:outline-offset-2
+            focus-visible:outline-neutral-900
+            md:h-[70px] md:w-[310px] md:px-10
+            md:text-xs md:font-bold md:uppercase
+            md:tracking-[0.25em]
+          "
+        >
+          Ver coleção
+        </Link>
+      </div>
 
       {/* Instagram no banner mobile */}
       <a
