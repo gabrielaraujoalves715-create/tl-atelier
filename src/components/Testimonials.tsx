@@ -23,6 +23,10 @@ export default function Testimonials() {
       src: '/depoimento-3.webp',
       alt: 'Feedback de cliente da TL Atelier',
     },
+    {
+      src: '/depoimento-cliente-4.webp',
+      alt: 'Depoimento de cliente sobre as joias e o atendimento da TL Atelier',
+    },
   ];
 
   useEffect(() => {
@@ -56,21 +60,20 @@ export default function Testimonials() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Título */}
           <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
-
             <h2
-  className="
-    font-serif
-    text-[30px]
-    font-medium
-    leading-[1.15]
-    tracking-[-0.02em]
-    text-brand-text
-    sm:text-[38px]
-    md:text-[42px]
-  "
->
-  O que dizem sobre nós
-</h2>
+              className="
+                font-serif
+                text-[30px]
+                font-medium
+                leading-[1.15]
+                tracking-[-0.02em]
+                text-brand-text
+                sm:text-[38px]
+                md:text-[42px]
+              "
+            >
+              O que dizem sobre nós
+            </h2>
 
             <p
               className="
@@ -96,9 +99,9 @@ export default function Testimonials() {
             className="
               flex snap-x snap-mandatory gap-4
               overflow-x-auto pb-4
-              md:grid md:grid-cols-3
+              md:grid md:grid-cols-2
               md:gap-6 md:overflow-visible md:pb-0
-              lg:gap-8
+              lg:grid-cols-4 lg:gap-8
             "
           >
             {testimonials.map((testimonial, index) => (

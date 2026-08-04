@@ -49,6 +49,11 @@ const navLinks: NavLink[] = [
     category: 'brincos',
   },
   {
+    label: 'Infantil',
+    href: '/categoria/infantil',
+    category: 'infantil',
+  },
+  {
     label: 'Conjuntos',
     href: '/categoria/conjuntos',
     category: 'conjuntos',

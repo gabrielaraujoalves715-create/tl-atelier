@@ -15,9 +15,9 @@ export default function Benefits() {
     },
     {
       icon: <CalendarCheck size={20} className="stroke-[1.25]" />,
-      title: 'Garantia de 2 anos',
+      title: 'Garantia por tempo indeterminado',
       description:
-        'Garantia de 2 anos contra defeitos de fabricação e problemas no material.',
+        'Garantia por tempo indeterminado contra defeitos de fabricação e problemas no material.',
     },
     {
       icon: <CreditCard size={20} className="stroke-[1.25]" />,
@@ -27,7 +27,7 @@ export default function Benefits() {
     },
     {
       icon: <Compass size={20} className="stroke-[1.25]" />,
-      title: 'Entrega e retirada em SP',
+      title: 'Entregas e retirada em SP',
       description:
         'Receba seu pedido ou escolha a opção de retirada presencial em São Paulo.',
     },

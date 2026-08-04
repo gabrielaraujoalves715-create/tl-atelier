@@ -9,12 +9,12 @@ import EditorialSection from '../components/EditorialSection';
 import Benefits from '../components/Benefits';
 import NewReleases from '../components/NewReleases';
 import Testimonials from '../components/Testimonials';
+import FAQ from '../components/FAQ';
 import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
 import CartDrawer from '../components/CartDrawer';
 import MobileBottomNav from '../components/MobileBottomNav';
 import type { ProductCategory } from '../types/product';
-
 
 export default function Home() {
   const navigate = useNavigate();
@@ -73,6 +73,7 @@ export default function Home() {
         <Benefits />
         <NewReleases />
         <Testimonials />
+        <FAQ />
         <FinalCTA />
       </main>
 

@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import {
+  HelpCircle,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react';
 
 interface FAQItem {
   question: string;
@@ -7,77 +11,174 @@ interface FAQItem {
 }
 
 export default function FAQ() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] =
+    useState<number | null>(null);
 
   const faqs: FAQItem[] = [
     {
       question: 'A prata é realmente 925 legítima?',
-      answer: 'Sim, todas as joias da TL Atelier são confeccionadas em prata 925 legítima de altíssima pureza. Enviamos junto o certificado de garantia do teor do metal.'
+      answer:
+        'Sim, todas as joias da TL Atelier são confeccionadas em Prata 925 legítima. Enviamos junto o certificado de garantia.',
     },
     {
       question: 'Qual o prazo e a cobertura da garantia?',
-      answer: 'Oferecemos garantia de 2 anos sobre o teor da prata. A garantia cobre defeitos de fabricação e autenticidade do metal. Não cobre quebras, perda de pedras ou danos por mau uso.'
+      answer:
+        'Oferecemos garantia por tempo indeterminado sobre o teor da prata. A garantia cobre defeitos de fabricação e autenticidade do metal. Não cobre quebras, perda de pedras ou danos por mau uso.',
     },
     {
       question: 'Quais são as formas de pagamento aceitas?',
-      answer: 'Aceitamos pagamentos simplificados via Pix, cartões de crédito e dinheiro físico na retirada de pedidos.'
+      answer:
+        'Aceitamos pagamentos via Pix, cartão e dinheiro na retirada de pedidos.',
     },
     {
       question: 'Como faço para encomendar e receber?',
-      answer: 'Como nosso site funciona como catálogo virtual, você pode adicionar as peças desejadas ao carrinho e clicar no botão de fechamento. Isso enviará a lista completa para o nosso WhatsApp, onde finalizamos o envio ou retirada.'
-    }
+      answer:
+        'Adicione as peças desejadas à sacola e finalize o pedido. A lista será enviada para o nosso WhatsApp, onde combinamos o pagamento, a retirada ou o envio.',
+    },
   ];
 
   const toggleIndex = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
+    setActiveIndex(
+      activeIndex === index ? null : index,
+    );
   };
 
   return (
-    <section id="faq" className="py-20 border-b border-brand-soft-rose/20 bg-brand-main">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+    <section
+      id="faq"
+      className="
+        border-b border-brand-soft-rose/20
+        bg-brand-main
+        py-16 sm:py-20
+      "
+    >
+      <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        {/* Título */}
+        <div className="mb-10 text-center sm:mb-14">
+          <span
+            className="
+              mb-3 inline-flex
+              items-center gap-1.5
+              text-[10px] font-bold
+              uppercase tracking-[0.25em]
+              text-brand-dark-rose
+            "
+          >
         
-        {/* Header */}
-        <div className="text-center mb-12">
-          <span className="text-[10px] uppercase tracking-[0.25em] text-brand-dark-rose font-bold mb-2 inline-flex items-center gap-1.5">
-            <HelpCircle size={10} />
-            Dúvidas Frequentes
+            
           </span>
-          <h2 className="font-serif text-3xl text-brand-text font-normal italic">
-            Perguntas Comuns
+
+          <h2
+            className="
+              font-serif
+              text-[30px]
+              font-medium
+              leading-[1.15]
+              tracking-[-0.02em]
+              text-brand-text
+              sm:text-[38px]
+              md:text-[42px]
+            "
+          >
+            Perguntas frequentes
           </h2>
-          <p className="text-[10px] uppercase tracking-widest text-brand-text/40 mt-1">
-            Encontre respostas rápidas para as suas perguntas
+
+          <p
+            className="
+              mt-3
+              text-xs uppercase tracking-widest
+              text-brand-text/50
+            "
+          >
+            Encontre respostas rápidas para suas perguntas
           </p>
+
+          <div
+            className="
+              mx-auto mt-5
+              h-px w-12
+              bg-brand-dark-rose/40
+            "
+          />
         </div>
 
-        {/* Accordions */}
+        {/* Perguntas */}
         <div className="space-y-4">
-          {faqs.map((faq, idx) => {
-            const isOpen = activeIndex === idx;
+          {faqs.map((faq, index) => {
+            const isOpen = activeIndex === index;
+
             return (
               <div
-                key={idx}
-                className="border border-brand-soft-rose/20 rounded-sm bg-white overflow-hidden transition-all duration-300"
+                key={faq.question}
+                className="
+                  overflow-hidden rounded-sm
+                  border border-brand-soft-rose/20
+                  bg-white
+                  transition-all duration-300
+                "
               >
                 <button
-                  onClick={() => toggleIndex(idx)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-hidden cursor-pointer"
-                  id={`faq-btn-${idx}`}
+                  type="button"
+                  onClick={() => toggleIndex(index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${index}`}
+                  id={`faq-btn-${index}`}
+                  className="
+                    flex w-full
+                    cursor-pointer
+                    items-center justify-between
+                    gap-4 px-6 py-4
+                    text-left
+                    focus:outline-none
+                    focus-visible:ring-2
+                    focus-visible:ring-brand-dark-rose
+                  "
                 >
-                  <span className="font-serif italic text-sm sm:text-base text-brand-text">
+                  <span
+                    className="
+                      font-serif
+                      text-sm font-medium
+                      leading-relaxed
+                      text-brand-text
+                      sm:text-base
+                    "
+                  >
                     {faq.question}
                   </span>
-                  <span className="text-brand-dark-rose">
-                    {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+
+                  <span className="shrink-0 text-brand-dark-rose">
+                    {isOpen ? (
+                      <ChevronUp size={16} />
+                    ) : (
+                      <ChevronDown size={16} />
+                    )}
                   </span>
                 </button>
-                
+
                 <div
-                  className={`transition-all duration-300 ease-in-out ${
-                    isOpen ? 'max-h-40 border-t border-brand-soft-rose/10 opacity-100 p-6' : 'max-h-0 opacity-0 pointer-events-none'
-                  }`}
+                  id={`faq-answer-${index}`}
+                  role="region"
+                  aria-labelledby={`faq-btn-${index}`}
+                  className={`
+                    overflow-hidden
+                    transition-all
+                    duration-300
+                    ease-in-out
+                    ${
+                      isOpen
+                        ? 'max-h-48 border-t border-brand-soft-rose/10 px-6 py-5 opacity-100'
+                        : 'pointer-events-none max-h-0 px-6 py-0 opacity-0'
+                    }
+                  `}
                 >
-                  <p className="text-xs sm:text-sm text-brand-text/70 leading-relaxed">
+                  <p
+                    className="
+                      text-xs
+                      leading-relaxed
+                      text-brand-text/70
+                      sm:text-sm
+                    "
+                  >
                     {faq.answer}
                   </p>
                 </div>
@@ -85,7 +186,6 @@ export default function FAQ() {
             );
           })}
         </div>
-
       </div>
     </section>
   );

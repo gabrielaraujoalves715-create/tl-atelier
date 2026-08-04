@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { products } from '../data/products';
 import ProductCard from './ProductCard';
 
@@ -44,6 +45,31 @@ export default function NewReleases() {
               <ProductCard product={product} />
             </div>
           ))}
+        </div>
+
+        <div className="mt-10 flex justify-center sm:mt-12">
+          <Link
+            to="/lancamentos"
+            className="
+              inline-flex
+              min-h-12 min-w-[180px]
+              items-center justify-center
+              border border-brand-text
+              px-8 py-3
+              text-xs font-semibold
+              uppercase tracking-[0.2em]
+              text-brand-text
+              transition-colors duration-300
+              hover:bg-brand-text
+              hover:text-white
+              focus:outline-none
+              focus-visible:ring-2
+              focus-visible:ring-brand-dark-rose
+              focus-visible:ring-offset-2
+            "
+          >
+            Ver mais
+          </Link>
         </div>
       </div>
     </section>

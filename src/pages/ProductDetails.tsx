@@ -474,7 +474,7 @@ export default function ProductDetails() {
                 <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold mb-2">
                   Formas de pagamento
                 </p>
-                <p className="text-xs text-neutral-600">Pix · Cartão de crédito · Dinheiro</p>
+                <p className="text-xs text-neutral-600">Pix · Cartão · Dinheiro</p>
               </div>
 
               {/* Seletor de quantidade */}

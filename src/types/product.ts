@@ -2,6 +2,7 @@ export type ProductCategory =
   | 'colares'
   | 'pulseiras'
   | 'brincos'
+  | 'infantil'
   | 'conjuntos'
   | 'aneis';
 

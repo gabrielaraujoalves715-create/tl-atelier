@@ -1,11 +1,16 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom';
 import { ScrollToTop } from './components/ScrollToTop';
 import { CanonicalUrl } from './components/CanonicalUrl';
 import { CartProvider } from './context/CartContext';
 import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
 import CategoryPage from './pages/CategoryPage';
-import BestSellers from './pages/BestSellers.tsx';
+import BestSellers from './pages/BestSellers';
+import Lancamentos from './pages/Lancamentos';
 
 export default function App() {
   return (
@@ -19,6 +24,11 @@ export default function App() {
           <Route
             path="/mais-vendidos"
             element={<BestSellers />}
+          />
+
+          <Route
+            path="/lancamentos"
+            element={<Lancamentos />}
           />
 
           <Route

@@ -31,7 +31,7 @@ export default function Categories({
     {
       key: 'colares',
       label: 'Colares',
-      image: '/colecao-colares.webp',
+      image: '/colar.png',
       imageClassName: 'scale-100 object-center',
     },
     {
@@ -45,6 +45,12 @@ export default function Categories({
       label: 'Brincos',
       image: '/colecao-brincos.webp',
       imageClassName: 'scale-[2.2] object-center',
+    },
+    {
+      key: 'infantil',
+      label: 'Infantil',
+      image: '/infantil.png',
+      imageClassName: 'scale-100 object-center',
     },
     {
       key: 'conjuntos',
@@ -170,11 +176,11 @@ export default function Categories({
                     ${
                       isSelected
                         ? 'scale-105 bg-brand-dark-rose shadow-md'
-                        : 'border border-brand-soft-rose/40 bg-brand-light-pink/20 group-hover:scale-105 group-hover:border-brand-dark-rose/60 group-hover:shadow-sm'
+                        : 'border border-brand-soft-rose/40 bg-transparent group-hover:scale-105 group-hover:border-brand-dark-rose/60 group-hover:shadow-sm'
                     }
                   `}
                 >
-                  <div className="h-full w-full overflow-hidden rounded-full bg-white">
+                  <div className="h-full w-full overflow-hidden rounded-full bg-transparent">
                     <img
                       src={image200}
                       srcSet={`${image200} 200w, ${image320} 320w`}
