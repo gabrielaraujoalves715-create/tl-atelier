@@ -18,9 +18,9 @@ export const products: Product[] = [
   description:
     'O Colar Ponto de Luz Rubi é produzido em Prata 925 legítima e possui uma pedra vermelha brilhante em um design delicado. Uma joia versátil que acrescenta elegância e um toque marcante ao visual.',
 
-  isFeatured: false,
-  isBestSeller: false,
-  isLancamento: true,
+  isFeatured: true,
+  isBestSeller: true,
+  isLancamento: false,
   material: 'Prata 925 legítima',
   warranty: 'Tempo indeterminado',
 
@@ -45,7 +45,7 @@ export const products: Product[] = [
 
   isFeatured: false,
   isBestSeller: false,
-  isLancamento: true,
+  isLancamento: false,
   material: 'Prata 925 legítima',
   warranty: 'Tempo indeterminado',
 
@@ -70,7 +70,7 @@ export const products: Product[] = [
 
   isFeatured: false,
   isBestSeller: false,
-  isLancamento: true,
+  isLancamento: false,
   material: 'Prata 925 legítima',
   warranty: 'Tempo indeterminado',
 
@@ -94,7 +94,7 @@ export const products: Product[] = [
     'O Colar Ponto de Luz Lilás em Prata 925 combina delicadeza e um toque de cor em uma peça versátil. Seu pingente redondo realça o brilho da pedra lilás, enquanto a corrente fina proporciona um acabamento leve e elegante. Ideal para usar sozinho ou em composições com outros colares.',
 
   isFeatured: false,
-  isBestSeller: true,
+  isBestSeller: false,
   isLancamento: false,
   material: 'Prata 925 legítima',
   warranty: 'Tempo indeterminado',
@@ -102,8 +102,8 @@ export const products: Product[] = [
   image: '/colar-ponto-de-luz-lilas-02.webp',
 
   images: [
-    '/colar-ponto-de-luz-lilas-02.webp',
     '/colar-lavanda-caixa.jpeg',
+    '/colar-ponto-de-luz-lilas-02.webp',
   ],
 },
   {
@@ -118,9 +118,9 @@ export const products: Product[] = [
       'Colar em Prata 925 com delicado pingente no formato infinito.',
     description:
       'O Colar Infinito em Prata 925 apresenta um pingente delicado com detalhes brilhantes, simbolizando conexões e sentimentos que permanecem. Uma joia elegante e versátil para usar diariamente ou presentear alguém especial.',
-    isFeatured: true,
+    isFeatured: false,
     isBestSeller: true,
-    isLancamento: false,
+    isLancamento: true,
     material: 'Prata 925 legítima',
     warranty: 'Tempo indeterminado',
     image: '/colar-infinito-prata-925.webp',
@@ -138,7 +138,7 @@ export const products: Product[] = [
       'Colar antialérgico em Prata 925 com pedra central lapidada e brilho marcante.',
     description:
       'O Colar Diamante é produzido em Prata 925 legítima com acabamento antialérgico. Sua pedra central lapidada se destaca pelo brilho intenso, enquanto a corrente delicada proporciona um acabamento elegante. Uma joia clássica para iluminar o visual em qualquer ocasião.',
-    isFeatured: true,
+    isFeatured: false,
     isBestSeller: true,
     isLancamento: true,
 material: 'Prata 925 legítima',
@@ -479,7 +479,7 @@ material: 'Prata 925 legítima',
     'O Brinco Diamante em Prata 925 apresenta uma pedra redonda com brilho intenso e acabamento delicado. Seu design clássico combina facilmente com diferentes estilos, sendo uma opção versátil para usar no dia a dia ou em ocasiões especiais.',
 
   isFeatured: false,
-  isBestSeller: true,
+  isBestSeller: false,
   isLancamento: false,
   material: 'Prata 925 legítima',
   warranty: 'Tempo indeterminado',
@@ -506,8 +506,8 @@ material: 'Prata 925 legítima',
     'O Brinco Amour é produzido em Prata 925 legítima e apresenta um delicado design de coração. Uma joia versátil para trazer um toque romântico ao dia a dia ou presentear alguém especial.',
 
   isFeatured: true,
-  isBestSeller: false,
-  isLancamento: true,
+  isBestSeller: true,
+  isLancamento: false,
   material: 'Prata 925 legítima',
   warranty: 'Tempo indeterminado',
 
@@ -608,8 +608,8 @@ material: 'Prata 925 legítima',
     'O Conjunto Círculo de Luz é produzido em Prata 925 legítima e composto por colar e brincos com design circular cravejado. Uma combinação elegante e luminosa para ocasiões especiais ou produções sofisticadas.',
 
   isFeatured: true,
-  isBestSeller: false,
-  isLancamento: true,
+  isBestSeller: true,
+  isLancamento: false,
   material: 'Prata 925 legítima',
   warranty: 'Tempo indeterminado',
 
@@ -633,7 +633,7 @@ material: 'Prata 925 legítima',
     'O Conjunto da Sorte é produzido em Prata 925 legítima e composto por colar e brincos com delicado design de trevo vazado. Uma combinação elegante e simbólica para iluminar o visual e representar sorte em todos os momentos.',
 
   isFeatured: false,
-  isBestSeller: false,
+  isBestSeller: true,
   isLancamento: true,
   material: 'Prata 925 legítima',
   warranty: 'Tempo indeterminado',
@@ -724,7 +724,7 @@ material: 'Prata 925 legítima',
     description:
       'O Anel Trilogia é produzido em Prata 925 legítima com acabamento antialérgico. Seus três pontos de luz criam um brilho delicado e elegante, formando uma joia versátil para usar diariamente ou combinar com outros anéis.',
     isFeatured: false,
-    isBestSeller: true,
+    isBestSeller: false,
     isLancamento: false,
     material: 'Prata 925 legítima e antialérgica',
     warranty: 'Tempo indeterminado',
@@ -744,7 +744,7 @@ material: 'Prata 925 legítima',
       'Anel antialérgico em Prata 925 com uma delicada sequência de pontos de luz.',
     description:
       'O Anel Riviera é produzido em Prata 925 legítima com acabamento antialérgico. Sua sequência de pontos de luz cria um brilho delicado e elegante, formando uma joia versátil para usar sozinha ou combinar com outros anéis.',
-    isFeatured: true,
+    isFeatured: false,
     isBestSeller: true,
     isLancamento: true,
     material: 'Prata 925 legítima e antialérgica',
@@ -770,7 +770,7 @@ material: 'Prata 925 legítima',
     'O Anel Elegance é produzido em Prata 925 legítima e apresenta um design delicado e versátil. Uma joia elegante para usar diariamente ou combinar com outros anéis em diferentes ocasiões.',
 
   isFeatured: false,
-  isBestSeller: false,
+  isBestSeller: true,
   isLancamento: true,
   material: 'Prata 925 legítima',
   warranty: 'Tempo indeterminado',

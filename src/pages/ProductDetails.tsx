@@ -9,6 +9,7 @@ import { ImagePlaceholder } from '../components/ImagePlaceholder';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import type { ChildType } from '../types/product';
+import ProductReviews from '../components/ProductReviews';
 
 const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
@@ -561,6 +562,11 @@ export default function ProductDetails() {
             </div>
           </div>
         </section>
+
+          <ProductReviews
+          productSlug={product.slug}
+          productName={product.name}
+        />
 
         {/* Produtos relacionados */}
         {related.length > 0 && (
