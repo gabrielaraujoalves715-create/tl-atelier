@@ -22,6 +22,7 @@ type ProductReview = {
   comment: string;
   verified_purchase: boolean;
   created_at: string;
+  admin_reply: string | null;
 };
 
 type ProductReviewsProps = {
@@ -75,7 +76,7 @@ export default function ProductReviews({
     const { data, error } = await supabase
       .from('product_reviews')
       .select(
-        'id, customer_name, rating, comment, verified_purchase, created_at',
+        'id, customer_name, rating, comment, verified_purchase, created_at, admin_reply',
       )
       .eq('product_slug', productSlug)
       .order('created_at', { ascending: false });
@@ -398,6 +399,18 @@ export default function ProductReviews({
                       <p className="mt-5 max-w-3xl whitespace-pre-line break-words text-base leading-relaxed text-neutral-700">
                         {review.comment}
                       </p>
+
+                      {review.admin_reply && (
+                        <div className="mt-6 rounded-xl border border-[#E8E2DF] bg-[#F8F5F3] p-5">
+                          <p className="text-sm font-bold text-neutral-950">
+                            Resposta da TL Atelier
+                          </p>
+
+                          <p className="mt-2 whitespace-pre-line break-words text-sm leading-relaxed text-neutral-700">
+                            {review.admin_reply}
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     <time
@@ -618,7 +631,6 @@ export default function ProductReviews({
                       'Enviar avaliação'
                     )}
                   </button>
-
                 </form>
               )}
             </div>
