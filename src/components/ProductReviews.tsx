@@ -228,10 +228,10 @@ export default function ProductReviews({
     <>
       <section
         id="avaliacoes"
-        className="border-t border-[#E8E2DF] bg-white"
+        className="border-t border-[#E8E2DF] bg-white font-sans"
       >
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <h2 className="font-sans text-3xl font-bold text-neutral-900 sm:text-4xl">
+          <h2 className="font-serif text-3xl font-semibold text-neutral-900 sm:text-4xl">
             Avaliações
           </h2>
 
@@ -358,7 +358,7 @@ export default function ProductReviews({
                       </div>
 
                       <div className="pt-1">
-                        <p className="text-base font-bold text-neutral-900">
+                        <p className="font-sans text-base font-semibold text-neutral-900">
                           {review.customer_name}
                         </p>
 
@@ -396,17 +396,17 @@ export default function ProductReviews({
                         ))}
                       </div>
 
-                      <p className="mt-5 max-w-3xl whitespace-pre-line break-words text-base leading-relaxed text-neutral-700">
+                      <p className="mt-5 max-w-3xl whitespace-pre-line break-words font-sans text-base leading-relaxed text-neutral-700">
                         {review.comment}
                       </p>
 
                       {review.admin_reply && (
                         <div className="mt-6 rounded-xl border border-[#E8E2DF] bg-[#F8F5F3] p-5">
-                          <p className="text-sm font-bold text-neutral-950">
+                          <p className="font-serif text-base font-semibold text-neutral-950">
                             Resposta da TL Atelier
                           </p>
 
-                          <p className="mt-2 whitespace-pre-line break-words text-sm leading-relaxed text-neutral-700">
+                          <p className="mt-2 whitespace-pre-line break-words font-sans text-sm leading-relaxed text-neutral-700">
                             {review.admin_reply}
                           </p>
                         </div>
@@ -428,211 +428,266 @@ export default function ProductReviews({
 
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 px-3 py-4 sm:px-6"
+          className="fixed inset-0 z-[100] overflow-y-auto bg-black/60 p-2 sm:p-5"
           role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              closeModal();
-            }
-          }}
+          onMouseDown={() => closeModal()}
         >
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="review-modal-title"
-            className="relative max-h-[92vh] w-full max-w-[700px] overflow-y-auto rounded-[22px] bg-white shadow-2xl"
-          >
-            <div className="p-6 sm:p-9 lg:p-10">
-              <div className="mb-8 flex items-start justify-between gap-6">
-                <div>
-                  <h2
-                    id="review-modal-title"
-                    className="text-2xl font-bold text-neutral-950 sm:text-3xl"
-                  >
-                    Enviar avaliação
-                  </h2>
-
-                  <p className="mt-2 text-sm text-neutral-500">
-                    Conte como foi sua experiência com {productName}.
-                  </p>
-                </div>
+          <div className="flex min-h-full items-center justify-center">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="review-modal-title"
+              onMouseDown={(event) => event.stopPropagation()}
+              className="
+                my-auto
+                max-h-[calc(100dvh-16px)]
+                w-full max-w-[620px]
+                overflow-y-auto
+                rounded-[26px]
+                bg-white
+                shadow-2xl
+                sm:max-h-[calc(100dvh-40px)]
+                sm:rounded-[30px]
+              "
+            >
+              <div
+                className="
+                  sticky top-0 z-10
+                  flex items-center justify-between gap-4
+                  rounded-t-[26px]
+                  bg-white
+                  px-5 py-4
+                  sm:rounded-t-[30px]
+                  sm:px-7 sm:py-5
+                "
+              >
+                <h2
+                  id="review-modal-title"
+                  className="font-serif text-2xl font-semibold leading-tight text-neutral-950 sm:text-3xl"
+                >
+                  Enviar avaliação
+                </h2>
 
                 <button
                   type="button"
                   onClick={closeModal}
                   aria-label="Fechar formulário de avaliação"
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-900 transition-colors hover:bg-neutral-200"
+                  className="
+                    flex h-10 w-10 shrink-0 items-center justify-center
+                    rounded-full bg-neutral-100 text-neutral-900
+                    transition-colors hover:bg-neutral-200
+                    focus-visible:outline-none
+                    focus-visible:ring-2
+                    focus-visible:ring-neutral-900
+                    focus-visible:ring-offset-2
+                    sm:h-11 sm:w-11
+                  "
                 >
-                  <X size={21} />
+                  <X size={20} />
                 </button>
               </div>
 
-              {successMessage ? (
-                <div
-                  role="status"
-                  className="rounded-xl border border-emerald-200 bg-emerald-50 p-6"
-                >
-                  <p className="text-sm font-semibold text-emerald-800">
-                    {successMessage}
-                  </p>
-
-                  <button
-                    type="button"
-                    onClick={closeModal}
-                    className="mt-6 min-h-12 bg-black px-8 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white"
+              <div className="px-5 pb-5 pt-2 sm:px-7 sm:pb-7 sm:pt-3">
+                {successMessage ? (
+                  <div
+                    role="status"
+                    className="rounded-xl border border-emerald-200 bg-emerald-50 p-5"
                   >
-                    Fechar
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-6">
-                    <label
-                      htmlFor="review-customer-name"
-                      className="mb-3 block text-base font-bold text-neutral-950"
-                    >
-                      Nome
-                    </label>
-
-                    <input
-                      id="review-customer-name"
-                      type="text"
-                      value={customerName}
-                      onChange={(event) =>
-                        setCustomerName(event.target.value)
-                      }
-                      maxLength={50}
-                      autoComplete="name"
-                      autoFocus
-                      className="h-[68px] w-full rounded-xl border border-neutral-300 bg-white px-5 text-base text-neutral-900 outline-none transition-colors focus:border-brand-dark-rose focus:ring-1 focus:ring-brand-dark-rose"
-                    />
-                  </div>
-
-                  <div className="mb-6">
-                    <label
-                      htmlFor="review-customer-email"
-                      className="mb-3 block text-base font-bold text-neutral-950"
-                    >
-                      E-mail
-                    </label>
-
-                    <input
-                      id="review-customer-email"
-                      type="email"
-                      value={customerEmail}
-                      onChange={(event) =>
-                        setCustomerEmail(event.target.value)
-                      }
-                      maxLength={120}
-                      autoComplete="email"
-                      className="h-[68px] w-full rounded-xl border border-neutral-300 bg-white px-5 text-base text-neutral-900 outline-none transition-colors focus:border-brand-dark-rose focus:ring-1 focus:ring-brand-dark-rose"
-                    />
-
-                    <p className="mt-2 text-xs text-neutral-400">
-                      Seu e-mail não será publicado.
+                    <p className="font-sans text-sm font-medium leading-6 text-emerald-800">
+                      {successMessage}
                     </p>
+
+                    <button
+                      type="button"
+                      onClick={closeModal}
+                      className="
+                        mt-5 min-h-11 rounded-xl bg-black px-7 py-3
+                        text-sm font-bold text-white
+                        transition-colors hover:bg-neutral-800
+                      "
+                    >
+                      Fechar
+                    </button>
                   </div>
+                ) : (
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                      <label
+                        htmlFor="review-customer-name"
+                        className="mb-2 block font-sans text-sm font-semibold text-neutral-950 sm:text-base"
+                      >
+                        Nome
+                      </label>
 
-                  <fieldset className="mb-7">
-                    <legend className="mb-4 block text-base font-bold text-neutral-950">
-                      Nota
-                    </legend>
-
-                    <div
-                      className="flex items-center gap-1 sm:gap-2"
-                      onMouseLeave={() => setHoveredRating(0)}
-                    >
-                      {[1, 2, 3, 4, 5].map((star) => {
-                        const activeRating =
-                          hoveredRating || rating;
-                        const isActive = star <= activeRating;
-
-                        return (
-                          <button
-                            key={star}
-                            type="button"
-                            onClick={() => setRating(star)}
-                            onMouseEnter={() =>
-                              setHoveredRating(star)
-                            }
-                            aria-label={`${star} ${
-                              star === 1
-                                ? 'estrela'
-                                : 'estrelas'
-                            }`}
-                            aria-pressed={rating === star}
-                            className="p-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark-rose"
-                          >
-                            <Star
-                              size={43}
-                              strokeWidth={1.5}
-                              aria-hidden="true"
-                              className={
-                                isActive
-                                  ? 'fill-brand-dark-rose text-brand-dark-rose'
-                                  : 'fill-transparent text-neutral-300'
-                              }
-                            />
-                          </button>
-                        );
-                      })}
+                      <input
+                        id="review-customer-name"
+                        type="text"
+                        value={customerName}
+                        onChange={(event) =>
+                          setCustomerName(event.target.value)
+                        }
+                        maxLength={50}
+                        autoComplete="name"
+                        autoFocus
+                        className="
+                          h-12 w-full rounded-xl border border-neutral-300
+                          bg-white px-4 font-sans text-base text-neutral-900
+                          outline-none transition-colors
+                          focus:border-brand-dark-rose
+                          focus:ring-1 focus:ring-brand-dark-rose
+                          sm:h-14
+                        "
+                      />
                     </div>
-                  </fieldset>
 
-                  <div>
-                    <label
-                      htmlFor="review-comment"
-                      className="mb-3 block text-base font-bold text-neutral-950"
-                    >
-                      Comentário
-                    </label>
+                    <div className="mb-4">
+                      <label
+                        htmlFor="review-customer-email"
+                        className="mb-2 block font-sans text-sm font-semibold text-neutral-950 sm:text-base"
+                      >
+                        E-mail
+                      </label>
 
-                    <textarea
-                      id="review-comment"
-                      value={comment}
-                      onChange={(event) =>
-                        setComment(event.target.value)
-                      }
-                      maxLength={MAX_COMMENT_LENGTH}
-                      rows={7}
-                      className="min-h-[190px] w-full resize-y rounded-xl border border-neutral-300 bg-white px-5 py-4 text-base text-neutral-900 outline-none transition-colors focus:border-brand-dark-rose focus:ring-1 focus:ring-brand-dark-rose"
-                    />
+                      <input
+                        id="review-customer-email"
+                        type="email"
+                        value={customerEmail}
+                        onChange={(event) =>
+                          setCustomerEmail(event.target.value)
+                        }
+                        maxLength={120}
+                        autoComplete="email"
+                        className="
+                          h-12 w-full rounded-xl border border-neutral-300
+                          bg-white px-4 font-sans text-base text-neutral-900
+                          outline-none transition-colors
+                          focus:border-brand-dark-rose
+                          focus:ring-1 focus:ring-brand-dark-rose
+                          sm:h-14
+                        "
+                      />
+                    </div>
 
-                    <div className="mt-2 flex justify-end">
-                      <span className="text-xs text-neutral-400">
-                        {comment.length}/{MAX_COMMENT_LENGTH}
+                    <fieldset className="mb-4">
+                      <legend className="mb-2 block font-sans text-sm font-semibold text-neutral-950 sm:text-base">
+                        Nota
+                      </legend>
+
+                      <div
+                        className="flex items-center gap-0.5 sm:gap-1"
+                        onMouseLeave={() => setHoveredRating(0)}
+                      >
+                        {[1, 2, 3, 4, 5].map((star) => {
+                          const activeRating =
+                            hoveredRating || rating;
+                          const isActive = star <= activeRating;
+
+                          return (
+                            <button
+                              key={star}
+                              type="button"
+                              onClick={() => setRating(star)}
+                              onMouseEnter={() =>
+                                setHoveredRating(star)
+                              }
+                              aria-label={`${star} ${
+                                star === 1
+                                  ? 'estrela'
+                                  : 'estrelas'
+                              }`}
+                              aria-pressed={rating === star}
+                              className="
+                                flex h-9 w-9 items-center justify-center
+                                rounded-md
+                                focus-visible:outline-none
+                                focus-visible:ring-2
+                                focus-visible:ring-brand-dark-rose
+                                sm:h-10 sm:w-10
+                              "
+                            >
+                              <Star
+                                size={32}
+                                strokeWidth={1.5}
+                                aria-hidden="true"
+                                className={
+                                  isActive
+                                    ? 'fill-brand-dark-rose text-brand-dark-rose'
+                                    : 'fill-transparent text-neutral-300'
+                                }
+                              />
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </fieldset>
+
+                    <div>
+                      <label
+                        htmlFor="review-comment"
+                        className="mb-2 block font-sans text-sm font-semibold text-neutral-950 sm:text-base"
+                      >
+                        Comentário
+                      </label>
+
+                      <textarea
+                        id="review-comment"
+                        value={comment}
+                        onChange={(event) =>
+                          setComment(event.target.value)
+                        }
+                        maxLength={MAX_COMMENT_LENGTH}
+                        rows={4}
+                        className="
+                          min-h-[110px] w-full resize-none rounded-xl
+                          border border-neutral-300 bg-white
+                          px-4 py-3 font-sans text-base leading-6 text-neutral-900
+                          outline-none transition-colors
+                          focus:border-brand-dark-rose
+                          focus:ring-1 focus:ring-brand-dark-rose
+                          sm:min-h-[135px]
+                        "
+                      />
+
+                      <span className="sr-only">
+                        {comment.length} de {MAX_COMMENT_LENGTH} caracteres
                       </span>
                     </div>
-                  </div>
 
-                  {formError && (
-                    <p
-                      role="alert"
-                      className="mt-5 rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold text-red-700"
-                    >
-                      {formError}
-                    </p>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="mt-7 flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-black px-7 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <LoaderCircle
-                          size={17}
-                          className="animate-spin"
-                        />
-                        Enviando
-                      </>
-                    ) : (
-                      'Enviar avaliação'
+                    {formError && (
+                      <p
+                        role="alert"
+                        className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold leading-5 text-red-700"
+                      >
+                        {formError}
+                      </p>
                     )}
-                  </button>
-                </form>
-              )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="
+                        mt-4 flex min-h-12 w-full items-center justify-center
+                        gap-2 rounded-xl bg-black px-6 py-3
+                        font-sans text-sm font-semibold tracking-[0.04em] text-white sm:text-base
+                        transition-colors hover:bg-neutral-800
+                        disabled:cursor-not-allowed disabled:opacity-60
+                      "
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <LoaderCircle
+                            size={17}
+                            className="animate-spin"
+                          />
+                          Enviando
+                        </>
+                      ) : (
+                        'Enviar avaliação'
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
             </div>
           </div>
         </div>

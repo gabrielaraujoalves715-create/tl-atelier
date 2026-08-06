@@ -13,6 +13,7 @@ const categoryLabels: Record<ProductCategory, string> = {
   brincos: 'Brincos',
   conjuntos: 'Conjuntos',
   aneis: 'Anéis',
+  infantil: 'Infantil',
 };
 
 const normalizeText = (text: string) =>
