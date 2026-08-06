@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-  HelpCircle,
-  ChevronDown,
-  ChevronUp,
-} from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface FAQItem {
   question: string;
@@ -11,19 +7,18 @@ interface FAQItem {
 }
 
 export default function FAQ() {
-  const [activeIndex, setActiveIndex] =
-    useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const faqs: FAQItem[] = [
     {
       question: 'A prata é realmente 925 legítima?',
       answer:
-        'Sim, todas as joias da TL Atelier são confeccionadas em Prata 925 legítima. Enviamos junto o certificado de garantia.',
+        'Sim, todas as joias da TL Atelier são confeccionadas em Prata 925 legítima e acompanham certificado de garantia.',
     },
     {
       question: 'Qual o prazo e a cobertura da garantia?',
       answer:
-        'Oferecemos garantia por tempo indeterminado sobre o teor da prata. A garantia cobre defeitos de fabricação e autenticidade do metal. Não cobre quebras, perda de pedras ou danos por mau uso.',
+        'Oferecemos 2 anos de garantia contra defeitos de fabricação. A garantia não cobre quebras, perda de pedras, oxidação natural ou danos causados pelo uso inadequado da peça.',
     },
     {
       question: 'Quais são as formas de pagamento aceitas?',
@@ -38,9 +33,7 @@ export default function FAQ() {
   ];
 
   const toggleIndex = (index: number) => {
-    setActiveIndex(
-      activeIndex === index ? null : index,
-    );
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
@@ -55,19 +48,6 @@ export default function FAQ() {
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         {/* Título */}
         <div className="mb-10 text-center sm:mb-14">
-          <span
-            className="
-              mb-3 inline-flex
-              items-center gap-1.5
-              text-[10px] font-bold
-              uppercase tracking-[0.25em]
-              text-brand-dark-rose
-            "
-          >
-        
-            
-          </span>
-
           <h2
             className="
               font-serif

@@ -15,9 +15,9 @@ export default function Benefits() {
     },
     {
       icon: <CalendarCheck size={20} className="stroke-[1.25]" />,
-      title: 'Garantia por tempo indeterminado',
+      title: '2 anos de garantia',
       description:
-        'Garantia por tempo indeterminado contra defeitos de fabricação e problemas no material.',
+        'Suas joias em Prata 925 contam com 2 anos de garantia contra defeitos de fabricação.',
     },
     {
       icon: <CreditCard size={20} className="stroke-[1.25]" />,

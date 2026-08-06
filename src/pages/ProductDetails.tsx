@@ -59,6 +59,17 @@ export default function ProductDetails() {
   const currentOriginalPrice =
     selectedVariant?.originalPrice ?? product?.originalPrice;
 
+  const normalizedMaterial = product?.material?.toLowerCase() ?? '';
+  const isBanhado = normalizedMaterial.includes('banhad');
+
+  const displayedMaterial = isBanhado
+    ? product?.material ?? 'Peça banhada'
+    : 'Prata 925';
+
+  const displayedWarranty = isBanhado
+    ? '1 ano de garantia'
+    : '2 anos de garantia';
+
   const related = product
     ? products
         .filter((p) => p.category === product.category && p.id !== product.id)
@@ -442,28 +453,35 @@ export default function ProductDetails() {
               )}
 
               {/* Material e Garantia */}
-              {(product.material || product.warranty) && (
-                <div className="flex flex-col gap-3 mb-6 pb-6 border-b border-brand-soft-rose/15">
-                  {product.material && (
-                    <div className="flex items-center gap-3">
-                      <Shield size={14} className="text-brand-dark-rose flex-shrink-0" aria-hidden="true" />
-                      <span className="text-xs text-neutral-700">
-                        <span className="font-semibold uppercase tracking-wider">Material:</span>{' '}
-                        {product.material}
-                      </span>
-                    </div>
-                  )}
-                  {product.warranty && (
-                    <div className="flex items-center gap-3">
-                      <Clock size={14} className="text-brand-dark-rose flex-shrink-0" aria-hidden="true" />
-                      <span className="text-xs text-neutral-700">
-                        <span className="font-semibold uppercase tracking-wider">Garantia:</span>{' '}
-                        {product.warranty}
-                      </span>
-                    </div>
-                  )}
+              <div className="flex flex-col gap-3 mb-6 pb-6 border-b border-brand-soft-rose/15">
+                <div className="flex items-center gap-3">
+                  <Shield
+                    size={14}
+                    className="flex-shrink-0 text-brand-dark-rose"
+                    aria-hidden="true"
+                  />
+                  <span className="text-xs text-neutral-700">
+                    <span className="font-semibold uppercase tracking-wider">
+                      Material:
+                    </span>{' '}
+                    {displayedMaterial}
+                  </span>
                 </div>
-              )}
+
+                <div className="flex items-center gap-3">
+                  <Clock
+                    size={14}
+                    className="flex-shrink-0 text-brand-dark-rose"
+                    aria-hidden="true"
+                  />
+                  <span className="text-xs text-neutral-700">
+                    <span className="font-semibold uppercase tracking-wider">
+                      Garantia:
+                    </span>{' '}
+                    {displayedWarranty}
+                  </span>
+                </div>
+              </div>
 
               {/* Formas de pagamento */}
               <div className="mb-6 pb-6 border-b border-brand-soft-rose/15">

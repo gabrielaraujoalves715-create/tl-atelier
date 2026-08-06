@@ -108,7 +108,7 @@ export default function Footer() {
     ajuda: {
       title: "AJUDA",
       content:
-        "Oferecemos total suporte aos nossos clientes. Garantia por tempo indeterminado contra defeitos de fabricação. Opções flexíveis de entrega rápida via motoboy ou retirada agendada em pontos parceiros na Grande São Paulo.",
+        "Oferecemos total suporte aos nossos clientes. Garantia de 2 anos contra defeitos de fabricação. Opções flexíveis de entrega rápida ou retirada agendada em pontos parceiros na Grande São Paulo.",
     },
     sac: {
       title: "SAC",
