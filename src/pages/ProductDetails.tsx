@@ -273,11 +273,6 @@ export default function ProductDetails() {
             {/* ── Informações ── */}
             <div className="flex flex-col">
 
-              {/* Categoria */}
-              <span className="text-[10px] uppercase tracking-[0.3em] text-brand-dark-rose font-bold mb-3 capitalize">
-                {product.category}
-              </span>
-
               {/* Nome */}
               <h1 className="font-sans text-2xl sm:text-3xl font-bold text-neutral-900 leading-tight tracking-tight mb-5">
                 {product.name}
