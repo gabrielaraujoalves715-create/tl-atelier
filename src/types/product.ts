@@ -11,7 +11,8 @@ export type ChildType = 'menino' | 'menina';
 export interface ProductVariant {
   id: string;
   label: string;
-  childrenCount: number;
+  childrenCount?: number;
+  initialsCount?: number;
   price: number;
   originalPrice?: number;
 }
@@ -39,5 +40,6 @@ export interface Product {
 
   variants?: ProductVariant[];
   allowsChildSelection?: boolean;
+  allowsInitialSelection?: boolean;
   ringSizes?: number[];
 }

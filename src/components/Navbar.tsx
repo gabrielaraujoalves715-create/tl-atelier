@@ -119,7 +119,7 @@ export default function Navbar({
       {/* Barra promocional */}
       <div className="flex h-8 w-full select-none items-center justify-center border-b border-brand-dark-rose/25 bg-brand-dark-rose px-4 text-center text-[10px] font-semibold tracking-[0.18em] text-[#FFFDFC] sm:text-xs">
         Em compras acima de R$ 199,90 ganhe um
-        brinde exclusivo da TL Atelier. Aproveite!
+        brinde exclusivo da TL Atelier.
       </div>
 
       <header

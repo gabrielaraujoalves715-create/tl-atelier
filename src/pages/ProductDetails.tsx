@@ -1,6 +1,14 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ShoppingBag, Check, Shield, Clock } from 'lucide-react';
+import {
+  ArrowLeft,
+  ShoppingBag,
+  Check,
+  Shield,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CartDrawer from '../components/CartDrawer';
@@ -11,14 +19,19 @@ import { useCart } from '../context/CartContext';
 import type { ChildType } from '../types/product';
 import ProductReviews from '../components/ProductReviews';
 
-const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+const formatter = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+});
+
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 export default function ProductDetails() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { addItemWithQuantity, setIsOpen } = useCart();
 
-  const product = products.find((p) => p.slug === slug);
+  const product = products.find((item) => item.slug === slug);
   const initialVariant = product?.variants?.[0];
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,12 +40,21 @@ export default function ProductDetails() {
   const [isAdded, setIsAdded] = useState(false);
   const [selectedRingSize, setSelectedRingSize] = useState<number | null>(null);
   const [ringSizeError, setRingSizeError] = useState(false);
+  const [initialsError, setInitialsError] = useState(false);
+
   const [selectedVariantId, setSelectedVariantId] = useState(
     initialVariant?.id ?? '',
   );
+
   const [selectedChildren, setSelectedChildren] = useState<ChildType[]>(
-    initialVariant
+    initialVariant?.childrenCount
       ? Array<ChildType>(initialVariant.childrenCount).fill('menino')
+      : [],
+  );
+
+  const [selectedInitials, setSelectedInitials] = useState<string[]>(
+    initialVariant?.initialsCount
+      ? Array<string>(initialVariant.initialsCount).fill('')
       : [],
   );
 
@@ -40,22 +62,33 @@ export default function ProductDetails() {
     const firstVariant = product?.variants?.[0];
 
     setSelectedVariantId(firstVariant?.id ?? '');
+
     setSelectedChildren(
-      firstVariant
+      firstVariant?.childrenCount
         ? Array<ChildType>(firstVariant.childrenCount).fill('menino')
         : [],
     );
+
+    setSelectedInitials(
+      firstVariant?.initialsCount
+        ? Array<string>(firstVariant.initialsCount).fill('')
+        : [],
+    );
+
     setSelectedImage(0);
     setQuantity(1);
     setSelectedRingSize(null);
     setRingSizeError(false);
+    setInitialsError(false);
   }, [product]);
 
   const selectedVariant =
-    product?.variants?.find((variant) => variant.id === selectedVariantId) ??
-    product?.variants?.[0];
+    product?.variants?.find(
+      (variant) => variant.id === selectedVariantId,
+    ) ?? product?.variants?.[0];
 
   const currentPrice = selectedVariant?.price ?? product?.price ?? 0;
+
   const currentOriginalPrice =
     selectedVariant?.originalPrice ?? product?.originalPrice;
 
@@ -72,37 +105,88 @@ export default function ProductDetails() {
 
   const related = product
     ? products
-        .filter((p) => p.category === product.category && p.id !== product.id)
+        .filter(
+          (relatedProduct) =>
+            relatedProduct.category === product.category &&
+            relatedProduct.id !== product.id,
+        )
         .slice(0, 4)
     : [];
 
   const galleryImages =
-    product && product.images && product.images.length > 0
+    product?.images && product.images.length > 0
       ? product.images
       : product?.image
-      ? [product.image]
-      : [];
+        ? [product.image]
+        : [];
+
+  const handlePreviousImage = () => {
+    if (galleryImages.length < 2) return;
+
+    setSelectedImage((currentImage) =>
+      currentImage === 0
+        ? galleryImages.length - 1
+        : currentImage - 1,
+    );
+  };
+
+  const handleNextImage = () => {
+    if (galleryImages.length < 2) return;
+
+    setSelectedImage((currentImage) =>
+      currentImage === galleryImages.length - 1
+        ? 0
+        : currentImage + 1,
+    );
+  };
 
   const handleSelectCategory = () => {
     navigate('/');
   };
 
   const handleVariantChange = (variantId: string) => {
-    const variant = product?.variants?.find((item) => item.id === variantId);
+    const variant = product?.variants?.find(
+      (item) => item.id === variantId,
+    );
+
     if (!variant) return;
 
     setSelectedVariantId(variant.id);
+
     setSelectedChildren(
-      Array<ChildType>(variant.childrenCount).fill('menino'),
+      variant.childrenCount
+        ? Array<ChildType>(variant.childrenCount).fill('menino')
+        : [],
     );
+
+    setSelectedInitials(
+      variant.initialsCount
+        ? Array<string>(variant.initialsCount).fill('')
+        : [],
+    );
+
+    setInitialsError(false);
   };
 
-  const handleChildTypeChange = (index: number, childType: ChildType) => {
+  const handleChildTypeChange = (
+    index: number,
+    childType: ChildType,
+  ) => {
     setSelectedChildren((current) =>
       current.map((item, itemIndex) =>
         itemIndex === index ? childType : item,
       ),
     );
+  };
+
+  const handleInitialChange = (index: number, letter: string) => {
+    setSelectedInitials((current) =>
+      current.map((item, itemIndex) =>
+        itemIndex === index ? letter : item,
+      ),
+    );
+
+    setInitialsError(false);
   };
 
   const handleRingSizeChange = (ringSize: number) => {
@@ -112,10 +196,31 @@ export default function ProductDetails() {
 
   const getChildrenLabel = () =>
     selectedChildren
-      .map((child, index) =>
-        `${index + 1}º ${child === 'menino' ? 'Menino' : 'Menina'}`,
+      .map(
+        (child, index) =>
+          `${index + 1}º ${child === 'menino' ? 'Menino' : 'Menina'}`,
       )
       .join(', ');
+
+  const getInitialsLabel = () => {
+    if (
+      selectedInitials.length === 0 ||
+      selectedInitials.some((letter) => !letter)
+    ) {
+      return '';
+    }
+
+    return selectedInitials.length === 1
+      ? `Inicial: ${selectedInitials[0]}`
+      : `Iniciais: ${selectedInitials.join(' e ')}`;
+  };
+
+  const hasMissingInitials = () =>
+    Boolean(
+      product?.allowsInitialSelection &&
+        (selectedInitials.length === 0 ||
+          selectedInitials.some((letter) => !letter)),
+    );
 
   const handleAddToCart = () => {
     if (!product) return;
@@ -125,17 +230,36 @@ export default function ProductDetails() {
       return;
     }
 
+    if (hasMissingInitials()) {
+      setInitialsError(true);
+      return;
+    }
+
     const childrenLabel = getChildrenLabel();
+    const initialsLabel = getInitialsLabel();
+
     const configurationParts = [
       selectedVariant?.id,
-      selectedChildren.length ? selectedChildren.join('-') : undefined,
-      selectedRingSize !== null ? `aro-${selectedRingSize}` : undefined,
+      selectedChildren.length
+        ? selectedChildren.join('-')
+        : undefined,
+      selectedInitials.length
+        ? `iniciais-${selectedInitials.join('-')}`
+        : undefined,
+      selectedRingSize !== null
+        ? `aro-${selectedRingSize}`
+        : undefined,
     ].filter(Boolean);
+
     const configurationLabels = [
       selectedVariant?.label,
       childrenLabel || undefined,
-      selectedRingSize !== null ? `Aro ${selectedRingSize}` : undefined,
+      initialsLabel || undefined,
+      selectedRingSize !== null
+        ? `Aro ${selectedRingSize}`
+        : undefined,
     ].filter(Boolean);
+
     const hasConfiguration = configurationParts.length > 0;
 
     const configuredProduct = hasConfiguration
@@ -147,12 +271,14 @@ export default function ProductDetails() {
           originalPrice: currentOriginalPrice,
           variants: undefined,
           allowsChildSelection: false,
+          allowsInitialSelection: false,
           ringSizes: undefined,
         }
       : product;
 
     addItemWithQuantity(configuredProduct, quantity);
     setIsAdded(true);
+
     setTimeout(() => {
       setIsAdded(false);
       setIsOpen(true);
@@ -160,17 +286,23 @@ export default function ProductDetails() {
   };
 
   const buildWhatsAppUrl = () => {
-    if (!product) return 'https://wa.me/5511965428500';
+    if (!product) {
+      return 'https://wa.me/5511965428500';
+    }
+
     const unitPrice = formatter.format(currentPrice);
     const total = formatter.format(currentPrice * quantity);
     const childrenLabel = getChildrenLabel();
+    const initialsLabel = getInitialsLabel();
     const url = window.location.href;
+
     const message = [
       'Olá! Vim pelo site da TL Atelier e tenho interesse neste produto:',
       '',
       `Produto: ${product.name}`,
       ...(selectedVariant ? [`Opção: ${selectedVariant.label}`] : []),
       ...(childrenLabel ? [`Pingentes: ${childrenLabel}`] : []),
+      ...(initialsLabel ? [initialsLabel] : []),
       ...(selectedRingSize !== null ? [`Aro: ${selectedRingSize}`] : []),
       `Quantidade: ${quantity}`,
       `Valor unitário: ${unitPrice}`,
@@ -179,10 +311,12 @@ export default function ProductDetails() {
       '',
       'Gostaria de verificar a disponibilidade.',
     ].join('\n');
-    return `https://wa.me/5511965428500?text=${encodeURIComponent(message)}`;
+
+    return `https://wa.me/5511965428500?text=${encodeURIComponent(
+      message,
+    )}`;
   };
 
-  /* ── Produto não encontrado ─────────────────────────────────── */
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col bg-brand-main">
@@ -191,14 +325,17 @@ export default function ProductDetails() {
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
         />
+
         <main className="flex-grow flex items-center justify-center mt-[120px] md:mt-[208px]">
           <div className="text-center px-6 py-24">
             <h1 className="font-serif text-2xl text-brand-text mb-4 italic">
               Produto não encontrado
             </h1>
+
             <p className="text-sm text-brand-text/60 mb-10 max-w-xs mx-auto">
               O produto que você está procurando não existe ou foi removido.
             </p>
+
             <Link
               to="/"
               className="inline-flex items-center gap-2 bg-black text-white px-8 py-3 text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-neutral-800 transition-colors"
@@ -208,13 +345,13 @@ export default function ProductDetails() {
             </Link>
           </div>
         </main>
+
         <Footer />
         <CartDrawer />
       </div>
     );
   }
 
-  /* ── Página do produto ──────────────────────────────────────── */
   return (
     <div className="min-h-screen flex flex-col bg-brand-main">
       <Navbar
@@ -224,8 +361,6 @@ export default function ProductDetails() {
       />
 
       <main className="flex-grow mt-[100px] md:mt-[116px]">
-
-        {/* Breadcrumb */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 border-b border-brand-soft-rose/15">
           <Link
             to="/"
@@ -236,43 +371,69 @@ export default function ProductDetails() {
           </Link>
         </div>
 
-        {/* Seção principal */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20">
-
-            {/* ── Galeria ── */}
             <div className="flex flex-col gap-4">
-
-              {/* Imagem principal */}
-              <div className="aspect-square w-full overflow-hidden border border-[#E8E2DF] bg-[#F6F3F1]">
+              <div className="relative aspect-square w-full overflow-hidden border border-[#E8E2DF] bg-[#F6F3F1]">
                 {galleryImages.length > 0 ? (
-                  <img
-                    src={galleryImages[selectedImage]}
-                    alt={`${product.name} — imagem principal`}
-                    className="w-full h-full object-cover"
-                  />
+                  <>
+                    <img
+                      src={galleryImages[selectedImage]}
+                      alt={`${product.name} — imagem ${selectedImage + 1}`}
+                      className="h-full w-full object-cover"
+                    />
+
+                    {galleryImages.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={handlePreviousImage}
+                          aria-label="Ver foto anterior"
+                          className="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow-md transition-all hover:scale-105 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark-rose"
+                        >
+                          <ChevronLeft size={24} aria-hidden="true" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={handleNextImage}
+                          aria-label="Ver próxima foto"
+                          className="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow-md transition-all hover:scale-105 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark-rose"
+                        >
+                          <ChevronRight size={24} aria-hidden="true" />
+                        </button>
+
+                        <span className="absolute bottom-3 right-3 rounded-full bg-black/65 px-3 py-1 text-[10px] font-semibold text-white">
+                          {selectedImage + 1} / {galleryImages.length}
+                        </span>
+                      </>
+                    )}
+                  </>
                 ) : (
-                  <ImagePlaceholder className="w-full h-full" label="Foto do produto" />
+                  <ImagePlaceholder
+                    className="h-full w-full"
+                    label="Foto do produto"
+                  />
                 )}
               </div>
 
-              {/* Miniaturas */}
               {galleryImages.length > 1 && (
                 <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-                  {galleryImages.map((img, idx) => (
+                  {galleryImages.map((image, index) => (
                     <button
-                      key={idx}
-                      onClick={() => setSelectedImage(idx)}
-                      aria-label={`Ver imagem ${idx + 1} de ${product.name}`}
+                      key={`${image}-${index}`}
+                      type="button"
+                      onClick={() => setSelectedImage(index)}
+                      aria-label={`Ver imagem ${index + 1} de ${product.name}`}
                       className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 overflow-hidden border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-dark-rose ${
-                        selectedImage === idx
+                        selectedImage === index
                           ? 'border-brand-dark-rose'
                           : 'border-[#E8E2DF] hover:border-neutral-400'
                       }`}
                     >
                       <img
-                        src={img}
-                        alt={`${product.name} — miniatura ${idx + 1}`}
+                        src={image}
+                        alt={`${product.name} — miniatura ${index + 1}`}
                         className="w-full h-full object-cover"
                       />
                     </button>
@@ -281,20 +442,17 @@ export default function ProductDetails() {
               )}
             </div>
 
-            {/* ── Informações ── */}
             <div className="flex flex-col">
-
-              {/* Nome */}
               <h1 className="font-sans text-2xl sm:text-3xl font-bold text-neutral-900 leading-tight tracking-tight mb-5">
                 {product.name}
               </h1>
 
-              {/* Preço */}
               {currentPrice > 0 ? (
                 <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-brand-soft-rose/15">
                   <span className="text-2xl font-bold text-neutral-900">
                     {formatter.format(currentPrice)}
                   </span>
+
                   {currentOriginalPrice && (
                     <span className="text-sm text-neutral-400 line-through">
                       {formatter.format(currentOriginalPrice)}
@@ -309,13 +467,16 @@ export default function ProductDetails() {
                 </div>
               )}
 
-              {/* Variações e personalização dos pingentes */}
               {product.variants &&
                 product.variants.length > 0 &&
                 selectedVariant && (
                   <div className="mb-6 pb-6 border-b border-brand-soft-rose/15">
                     <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-3">
-                      Quantidade de filhos
+                      {product.allowsChildSelection
+                        ? 'Quantidade de filhos'
+                        : product.allowsInitialSelection
+                          ? 'Quantidade de iniciais'
+                          : 'Escolha uma opção'}
                     </p>
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
@@ -335,6 +496,7 @@ export default function ProductDetails() {
                             }`}
                           >
                             <span className="block">{variant.label}</span>
+
                             <span
                               className={`block mt-1 text-[10px] ${
                                 isSelected
@@ -354,6 +516,7 @@ export default function ProductDetails() {
                         <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-1">
                           Personalize os pingentes
                         </p>
+
                         <p className="text-xs text-neutral-500 mb-4">
                           Escolha menino ou menina para cada filho.
                         </p>
@@ -398,15 +561,79 @@ export default function ProductDetails() {
                         </div>
                       </div>
                     )}
+
+                    {product.allowsInitialSelection &&
+                      selectedInitials.length > 0 && (
+                        <div>
+                          <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-1">
+                            Escolha as letras
+                          </p>
+
+                          <p className="text-xs text-neutral-500 mb-4">
+                            Selecione a letra de cada inicial.
+                          </p>
+
+                          <div
+                            className={`grid gap-3 ${
+                              selectedInitials.length > 1
+                                ? 'sm:grid-cols-2'
+                                : 'grid-cols-1'
+                            }`}
+                          >
+                            {selectedInitials.map(
+                              (selectedInitial, index) => (
+                                <label
+                                  key={index}
+                                  className="flex flex-col gap-2"
+                                >
+                                  <span className="text-xs font-semibold text-neutral-700">
+                                    {index + 1}ª inicial
+                                  </span>
+
+                                  <select
+                                    value={selectedInitial}
+                                    onChange={(event) =>
+                                      handleInitialChange(
+                                        index,
+                                        event.target.value,
+                                      )
+                                    }
+                                    className="h-12 w-full border border-[#E8E2DF] bg-white px-4 text-sm font-semibold text-neutral-800 focus:outline-none focus:ring-2 focus:ring-brand-dark-rose"
+                                  >
+                                    <option value="">
+                                      Selecione uma letra
+                                    </option>
+
+                                    {alphabet.map((letter) => (
+                                      <option key={letter} value={letter}>
+                                        {letter}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </label>
+                              ),
+                            )}
+                          </div>
+
+                          {initialsError && (
+                            <p
+                              role="alert"
+                              className="mt-3 text-xs font-semibold text-red-600"
+                            >
+                              Selecione todas as iniciais para continuar.
+                            </p>
+                          )}
+                        </div>
+                      )}
                   </div>
                 )}
 
-              {/* Seleção dos tamanhos disponíveis para anéis */}
               {product.ringSizes && product.ringSizes.length > 0 && (
                 <div className="mb-6 pb-6 border-b border-brand-soft-rose/15">
                   <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-1">
                     Escolha o tamanho do aro
                   </p>
+
                   <p className="text-xs text-neutral-500 mb-4">
                     Selecione uma numeração antes de adicionar à sacola.
                   </p>
@@ -445,14 +672,12 @@ export default function ProductDetails() {
                 </div>
               )}
 
-              {/* Descrição */}
               {product.description && (
                 <p className="text-sm text-neutral-600 leading-relaxed mb-6 pb-6 border-b border-brand-soft-rose/15">
                   {product.description}
                 </p>
               )}
 
-              {/* Material e Garantia */}
               <div className="flex flex-col gap-3 mb-6 pb-6 border-b border-brand-soft-rose/15">
                 <div className="flex items-center gap-3">
                   <Shield
@@ -460,6 +685,7 @@ export default function ProductDetails() {
                     className="flex-shrink-0 text-brand-dark-rose"
                     aria-hidden="true"
                   />
+
                   <span className="text-xs text-neutral-700">
                     <span className="font-semibold uppercase tracking-wider">
                       Material:
@@ -474,6 +700,7 @@ export default function ProductDetails() {
                     className="flex-shrink-0 text-brand-dark-rose"
                     aria-hidden="true"
                   />
+
                   <span className="text-xs text-neutral-700">
                     <span className="font-semibold uppercase tracking-wider">
                       Garantia:
@@ -483,27 +710,33 @@ export default function ProductDetails() {
                 </div>
               </div>
 
-              {/* Formas de pagamento */}
               <div className="mb-6 pb-6 border-b border-brand-soft-rose/15">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold mb-2">
                   Formas de pagamento
                 </p>
-                <p className="text-xs text-neutral-600">Pix · Cartão · Dinheiro</p>
+
+                <p className="text-xs text-neutral-600">
+                  Pix · Cartão · Dinheiro
+                </p>
               </div>
 
-              {/* Seletor de quantidade */}
               <div className="mb-7">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold mb-3">
                   Quantidade
                 </p>
+
                 <div className="inline-flex items-center border border-[#E8E2DF]">
                   <button
-                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    type="button"
+                    onClick={() =>
+                      setQuantity((current) => Math.max(1, current - 1))
+                    }
                     aria-label="Diminuir quantidade"
                     className="w-10 h-10 flex items-center justify-center text-neutral-700 hover:bg-neutral-50 transition-colors border-r border-[#E8E2DF] text-base leading-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-dark-rose"
                   >
                     −
                   </button>
+
                   <span
                     aria-live="polite"
                     aria-label={`Quantidade: ${quantity}`}
@@ -511,8 +744,10 @@ export default function ProductDetails() {
                   >
                     {quantity}
                   </span>
+
                   <button
-                    onClick={() => setQuantity((q) => q + 1)}
+                    type="button"
+                    onClick={() => setQuantity((current) => current + 1)}
                     aria-label="Aumentar quantidade"
                     className="w-10 h-10 flex items-center justify-center text-neutral-700 hover:bg-neutral-50 transition-colors border-l border-[#E8E2DF] text-base leading-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-dark-rose"
                   >
@@ -521,9 +756,9 @@ export default function ProductDetails() {
                 </div>
               </div>
 
-              {/* Botões de ação */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
+                  type="button"
                   onClick={handleAddToCart}
                   aria-label={`Adicionar ${product.name} à sacola`}
                   className={`flex-1 py-4 text-[10px] uppercase tracking-[0.2em] font-bold transition-all duration-300 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black ${
@@ -548,12 +783,23 @@ export default function ProductDetails() {
                 <a
                   href={buildWhatsAppUrl()}
                   onClick={(event) => {
+                    let hasError = false;
+
                     if (
                       product.ringSizes?.length &&
                       selectedRingSize === null
                     ) {
-                      event.preventDefault();
                       setRingSizeError(true);
+                      hasError = true;
+                    }
+
+                    if (hasMissingInitials()) {
+                      setInitialsError(true);
+                      hasError = true;
+                    }
+
+                    if (hasError) {
+                      event.preventDefault();
                     }
                   }}
                   target="_blank"
@@ -568,35 +814,37 @@ export default function ProductDetails() {
                   >
                     <path d="M12.04 2a9.84 9.84 0 0 0-8.39 14.98L2 22l5.17-1.61A9.99 9.99 0 1 0 12.04 2Zm0 17.98a8.02 8.02 0 0 1-4.1-1.12l-.29-.17-3.07.96.99-2.99-.19-.31a7.82 7.82 0 0 1-1.2-4.18 7.86 7.86 0 1 1 7.86 7.81Zm4.31-5.89c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.91-1.18-.71-.63-1.18-1.41-1.32-1.65-.14-.24-.01-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.47-.39-.41-.54-.42h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.39 1.37.5.58.18 1.1.16 1.51.1.46-.07 1.4-.57 1.6-1.13.2-.55.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z" />
                   </svg>
+
                   Comprar pelo WhatsApp
                 </a>
               </div>
-
             </div>
           </div>
         </section>
 
-          <ProductReviews
+        <ProductReviews
           productSlug={product.slug}
           productName={product.name}
         />
 
-        {/* Produtos relacionados */}
         {related.length > 0 && (
           <section className="border-t border-brand-soft-rose/15 bg-[#FFFDFC]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
               <h2 className="text-xs uppercase tracking-[0.3em] font-bold text-neutral-900 mb-10">
                 Você também pode gostar
               </h2>
+
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-                {related.map((rel) => (
-                  <ProductCard key={rel.id} product={rel} />
+                {related.map((relatedProduct) => (
+                  <ProductCard
+                    key={relatedProduct.id}
+                    product={relatedProduct}
+                  />
                 ))}
               </div>
             </div>
           </section>
         )}
-
       </main>
 
       <Footer />
