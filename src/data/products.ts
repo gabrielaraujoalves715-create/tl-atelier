@@ -416,17 +416,16 @@ export const products: Product[] = [
   category: 'colares',
 
   shortDescription:
-    'Kit com Limpa Prata e Flanela Mágica para recuperar o brilho das suas joias.',
+    'Kit Limpa Prata e Flanela Mágica para recuperar o brilho das suas joias.',
 
   description:
-    'O Kit Limpa Prata + Flanela Mágica é perfeito para manter suas joias sempre bonitas e brilhantes. O Limpa Prata auxilia na remoção da oxidação, enquanto a flanela finaliza a limpeza e devolve o brilho às peças de Prata 925.',
+    'O Kit Limpa Prata + Flanela Mágica é perfeito para manter suas joias sempre bonitas e brilhantes. O Limpa Prata auxilia na remoção da oxidação, enquanto a flanela finaliza a limpeza e renova o brilho das suas Peças.',
 
   isFeatured: true,
   isBestSeller: true,
   isLancamento: true,
 
   material: 'Limpa Prata + Flanela Mágica',
-  warranty: 'Produto para conservação de joias',
 
   image: '/kit-limpa-prata.jpeg',
   images: ['/kit-limpa-prata.jpeg'],

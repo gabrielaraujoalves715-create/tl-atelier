@@ -94,10 +94,14 @@ export default function ProductDetails() {
 
   const normalizedMaterial = product?.material?.toLowerCase() ?? '';
   const isBanhado = normalizedMaterial.includes('banhad');
+  const isCleaningKit =
+    product?.slug === 'kit-limpa-prata-com-flanela-magica';
 
-  const displayedMaterial = isBanhado
-    ? product?.material ?? 'Peça banhada'
-    : 'Prata 925';
+  const displayedMaterial = isCleaningKit
+    ? 'KIT LIMPA PRATAS'
+    : isBanhado
+      ? product?.material ?? 'Peça banhada'
+      : 'Prata 925';
 
   const displayedWarranty = isBanhado
     ? '1 ano de garantia'
@@ -694,20 +698,22 @@ export default function ProductDetails() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <Clock
-                    size={14}
-                    className="flex-shrink-0 text-brand-dark-rose"
-                    aria-hidden="true"
-                  />
+                {!isCleaningKit && (
+                  <div className="flex items-center gap-3">
+                    <Clock
+                      size={14}
+                      className="flex-shrink-0 text-brand-dark-rose"
+                      aria-hidden="true"
+                    />
 
-                  <span className="text-xs text-neutral-700">
-                    <span className="font-semibold uppercase tracking-wider">
-                      Garantia:
-                    </span>{' '}
-                    {displayedWarranty}
-                  </span>
-                </div>
+                    <span className="text-xs text-neutral-700">
+                      <span className="font-semibold uppercase tracking-wider">
+                        Garantia:
+                      </span>{' '}
+                      {displayedWarranty}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="mb-6 pb-6 border-b border-brand-soft-rose/15">
